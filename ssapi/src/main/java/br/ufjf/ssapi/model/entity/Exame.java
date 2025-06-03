@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class Exame{
     private String descricao;
-    private Laudo laudo;
+    private String laudo;
     private Paciente paciente;
     private Enfermeiro enfermeiro;
     private Date validade;

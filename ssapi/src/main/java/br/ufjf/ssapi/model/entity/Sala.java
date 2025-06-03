@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Sala {
-    private Equipamento equipamento;
+    private String equipamento;
     private Hospital hospital;
 }
