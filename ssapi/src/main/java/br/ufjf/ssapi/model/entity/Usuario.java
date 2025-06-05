@@ -9,6 +9,8 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@MappedSuperClass
+
 public abstract class Usuario {
     private Long id;
 

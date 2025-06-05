@@ -1,5 +1,9 @@
 package br.ufjf.ssapi.model.entity;
 
-public class Paciente extends Usuario {
+@Entity
 
+public class Paciente extends Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 }
