@@ -1,15 +1,16 @@
 package br.ufjf.ssapi.model.entity;
 
+import java.util.Date;
+
+import jakarta.persistence.MappedSuperclass;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@MappedSuperClass
+@MappedSuperclass
 
 public abstract class Usuario {
     private Long id;

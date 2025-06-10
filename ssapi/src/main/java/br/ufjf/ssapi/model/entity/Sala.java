@@ -1,5 +1,11 @@
 package br.ufjf.ssapi.model.entity;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Sala {
 
     @Id
@@ -17,7 +24,7 @@ public class Sala {
     private String equipamento;
 
     @OneToOne
-    private Exame exame
+    private Exame exame;
 
     @ManyToOne
     private Hospital hospital;
