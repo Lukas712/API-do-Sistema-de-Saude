@@ -21,10 +21,14 @@ public class EnfermeiroDTO {
     private String email;
     private String telefone;
     private String genero;
+    
+    private Long idHospital;
+    private String nomeHospital;
 
     public static EnfermeiroDTO create(Enfermeiro enfermeiro){
         ModelMapper modelMapper = new ModelMapper();
         EnfermeiroDTO dto = modelMapper.map(enfermeiro, EnfermeiroDTO.class);
+         dto.nomeHospital = enfermeiro.getHospital().getNome();
         return dto;
     }
 }

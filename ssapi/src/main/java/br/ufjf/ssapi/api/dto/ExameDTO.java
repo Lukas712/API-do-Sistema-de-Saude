@@ -19,10 +19,17 @@ public class ExameDTO {
     private String descricao;
     private String laudo;
     private Date validade;
+    
+    private Long idPaciente;
+    private String nomePaciente;
+    private Long idEnfermeiro;
+    private String nomeEnfermeiro;
 
     public static ExameDTO create(Exame exame){
         ModelMapper modelMapper = new ModelMapper();
         ExameDTO dto = modelMapper.map(exame, ExameDTO.class);
+        dto.nomePaciente = exame.getPaciente().getNome();
+        dto.nomeEnfermeiro = exame.getEnfermeiro().getNome();
         return dto;
     }
 }

@@ -20,6 +20,7 @@ public class Enfermeiro extends Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
 
     @ManyToOne
     private Hospital hospital;

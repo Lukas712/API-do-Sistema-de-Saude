@@ -22,10 +22,17 @@ public class MedicoDTO {
     private String email;
     private String telefone;
     private String genero;
+    
+    private Long idHospital;
+    private String nomeHospital;
+    private Long idEspecialidade;
+    private String nomeEspecialidade;
 
     public static MedicoDTO create(Medico medico){
         ModelMapper modelMapper = new ModelMapper();
         MedicoDTO dto = modelMapper.map(medico, MedicoDTO.class);
+        dto.nomeHospital = medico.getHospital().getNome();
+        dto.nomeEspecialidade = medico.getEspecialidade().getNome();
         return dto;
     }
 }

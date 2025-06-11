@@ -22,10 +22,13 @@ public class AssistenteAdministrativoDTO {
     private String email;
     private String telefone;
     private String genero;
+    private Long idHospital;
+    private String nomeHospital;
 
     public static AssistenteAdministrativoDTO create(AssistenteAdministrativo assistente){
         ModelMapper modelMapper = new ModelMapper();
         AssistenteAdministrativoDTO dto = modelMapper.map(assistente, AssistenteAdministrativoDTO.class);
+        dto.nomeHospital = assistente.getHospital().getNome();
         return dto;
     }
 }

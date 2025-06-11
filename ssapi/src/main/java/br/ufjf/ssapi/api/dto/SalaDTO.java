@@ -14,10 +14,17 @@ import lombok.NoArgsConstructor;
 public class SalaDTO {
     private Long id;
     private String equipamento;
+    
+    private Long idExame;
+    private String nomeExame;
+    private Long idHospital;
+    private String nomeHospital;
 
     public static SalaDTO create(Sala sala){
         ModelMapper modelMapper = new ModelMapper();
         SalaDTO dto = modelMapper.map(sala, SalaDTO.class);
+        dto.nomeExame = sala.getExame().getDescricao();
+        dto.nomeHospital = sala.getHospital().getNome();
         return dto;
     }
 }
