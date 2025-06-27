@@ -21,4 +21,20 @@ public abstract class Usuario {
     private String email;
     private String telefone;
     private String genero;
+
+    public boolean validaEmail(String email) {
+        return false;
+    }
+
+    public boolean validaCPF(String cpf) {
+        return false;
+    }
+
+    public boolean validaTelefone(String telefone) {
+        return false;
+    }
+
+    public boolean validaDataNascimento(Date dataNac) {
+        return false;
+    }
 }

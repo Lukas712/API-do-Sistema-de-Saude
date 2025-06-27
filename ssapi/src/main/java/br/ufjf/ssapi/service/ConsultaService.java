@@ -10,7 +10,6 @@ import br.ufjf.ssapi.model.entity.*;
 import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 public class ConsultaService {
 
@@ -41,6 +40,8 @@ public class ConsultaService {
     }
 
     public void validar(Consulta Consulta) throws PasswordException {
-        
+        if (Consulta.getDescricao() == null || Consulta.getDescricao().isEmpty()) {
+            throw new PasswordException("A consulta não pode ser vazio.");
+        }
     }
 }

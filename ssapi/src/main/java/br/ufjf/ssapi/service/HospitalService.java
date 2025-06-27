@@ -44,5 +44,11 @@ public class HospitalService {
         if (Hospital.getNome() == null || Hospital.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
+        if (Hospital.getLocal() == null || Hospital.getNome().isEmpty()) {
+            throw new PasswordException("O local não pode ser vazio.");
+        }
+        if (Hospital.validaCNPJ(Hospital.getCnpj())) {
+            throw new PasswordException("CNPJ está no formato incorreto.");
+        }
     }
 }

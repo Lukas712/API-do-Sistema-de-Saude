@@ -30,4 +30,8 @@ public class Exame{
 
     @ManyToOne
     private Enfermeiro enfermeiro;
+
+    public boolean validaValidade(Date validade){
+        return false;
+    }
 }

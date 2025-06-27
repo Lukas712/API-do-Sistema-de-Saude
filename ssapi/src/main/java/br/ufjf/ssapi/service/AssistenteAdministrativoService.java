@@ -44,5 +44,20 @@ public class AssistenteAdministrativoService {
         if (AssistenteAdministrativo.getNome() == null || AssistenteAdministrativo.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
+        if (AssistenteAdministrativo.getNome() == null || AssistenteAdministrativo.getNome().isEmpty()) {
+            throw new PasswordException("O nome não pode ser vazio.");
+        }
+        if (AssistenteAdministrativo.validaEmail(AssistenteAdministrativo.getEmail())) {
+            throw new PasswordException("O email está no formato incorreto.");
+        }
+        if (AssistenteAdministrativo.validaCPF(AssistenteAdministrativo.getCpf())) {
+            throw new PasswordException("O cpf está no formato incorreto.");
+        }
+        if (AssistenteAdministrativo.validaDataNascimento(AssistenteAdministrativo.getDataNascimento())) {
+            throw new PasswordException("A data está no formato incorreto.");
+        }
+        if (AssistenteAdministrativo.validaTelefone(AssistenteAdministrativo.getTelefone())) {
+            throw new PasswordException("O telefone está no formato incorreto.");
+        }
     }
 }

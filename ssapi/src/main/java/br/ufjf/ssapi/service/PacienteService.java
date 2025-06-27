@@ -1,15 +1,15 @@
 package br.ufjf.ssapi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import br.ufjf.ssapi.model.repository.*;
-import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.model.entity.Paciente;
+import br.ufjf.ssapi.model.repository.PacienteRepository;
 
 @Service
 public class PacienteService {
@@ -44,5 +44,18 @@ public class PacienteService {
         if (Paciente.getNome() == null || Paciente.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
+        if (Paciente.validaEmail(Paciente.getEmail())) {
+            throw new PasswordException("O email está no formato incorreto.");
+        }
+        if (Paciente.validaCPF(Paciente.getCpf())) {
+            throw new PasswordException("O cpf está no formato incorreto.");
+        }
+        if (Paciente.validaDataNascimento(Paciente.getDataNascimento())) {
+            throw new PasswordException("A data está no formato incorreto.");
+        }
+        if (Paciente.validaTelefone(Paciente.getTelefone())) {
+            throw new PasswordException("O telefone está no formato incorreto.");
+        }
     }
+
 }

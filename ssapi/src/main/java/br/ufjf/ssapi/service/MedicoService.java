@@ -10,7 +10,6 @@ import br.ufjf.ssapi.model.entity.*;
 import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
 
-
 @Service
 public class MedicoService {
 
@@ -43,6 +42,21 @@ public class MedicoService {
     public void validar(Medico Medico) throws PasswordException {
         if (Medico.getNome() == null || Medico.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
+        }
+        if (Medico.getNome() == null || Medico.getNome().isEmpty()) {
+            throw new PasswordException("O nome não pode ser vazio.");
+        }
+        if (Medico.validaEmail(Medico.getEmail())) {
+            throw new PasswordException("O email está no formato incorreto.");
+        }
+        if (Medico.validaCPF(Medico.getCpf())) {
+            throw new PasswordException("O cpf está no formato incorreto.");
+        }
+        if (Medico.validaDataNascimento(Medico.getDataNascimento())) {
+            throw new PasswordException("A data está no formato incorreto.");
+        }
+        if (Medico.validaTelefone(Medico.getTelefone())) {
+            throw new PasswordException("O telefone está no formato incorreto.");
         }
     }
 }

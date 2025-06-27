@@ -41,6 +41,14 @@ public class ExameService {
     }
 
     public void validar(Exame Exame) throws PasswordException {
-        
+        if (Exame.validaValidade(Exame.getValidade())) {
+            throw new PasswordException("Validade esta no formato incorreto");
+        }
+        if (Exame.getDescricao() == null || Exame.getDescricao().isEmpty()) {
+            throw new PasswordException("A descricao não pode ser vazia.");
+        }
+        if (Exame.getLaudo() == null || Exame.getLaudo().isEmpty()) {
+            throw new PasswordException("O laudo não pode ser vazio.");
+        }
     }
 }

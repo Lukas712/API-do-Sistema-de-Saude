@@ -44,5 +44,20 @@ public class EnfermeiroService {
         if (Enfermeiro.getNome() == null || Enfermeiro.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
+        if (Enfermeiro.getNome() == null || Enfermeiro.getNome().isEmpty()) {
+            throw new PasswordException("O nome não pode ser vazio.");
+        }
+        if (Enfermeiro.validaEmail(Enfermeiro.getEmail())) {
+            throw new PasswordException("O email está no formato incorreto.");
+        }
+        if (Enfermeiro.validaCPF(Enfermeiro.getCpf())) {
+            throw new PasswordException("O cpf está no formato incorreto.");
+        }
+        if (Enfermeiro.validaDataNascimento(Enfermeiro.getDataNascimento())) {
+            throw new PasswordException("A data está no formato incorreto.");
+        }
+        if (Enfermeiro.validaTelefone(Enfermeiro.getTelefone())) {
+            throw new PasswordException("O telefone está no formato incorreto.");
+        }
     }
 }

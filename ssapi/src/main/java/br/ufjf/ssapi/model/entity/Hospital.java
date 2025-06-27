@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.model.entity;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,4 +23,8 @@ public class Hospital {
     private String nome;
     private String cnpj;
     private String local;
+
+    public boolean validaCNPJ(String cnpj) {
+        return false;
+    }
 }

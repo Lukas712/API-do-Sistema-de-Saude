@@ -44,5 +44,20 @@ public class AdminService {
         if (admin.getNome() == null || admin.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
+        if (admin.getNome() == null || admin.getNome().isEmpty()) {
+            throw new PasswordException("O nome não pode ser vazio.");
+        }
+        if (admin.validaEmail(admin.getEmail())) {
+            throw new PasswordException("O email está no formato incorreto.");
+        }
+        if (admin.validaCPF(admin.getCpf())) {
+            throw new PasswordException("O cpf está no formato incorreto.");
+        }
+        if (admin.validaDataNascimento(admin.getDataNascimento())) {
+            throw new PasswordException("A data está no formato incorreto.");
+        }
+        if (admin.validaTelefone(admin.getTelefone())) {
+            throw new PasswordException("O telefone está no formato incorreto.");
+        }
     }
 }

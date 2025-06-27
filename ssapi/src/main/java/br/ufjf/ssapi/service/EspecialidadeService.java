@@ -44,5 +44,8 @@ public class EspecialidadeService {
         if (Especialidade.getNome() == null || Especialidade.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
+        if (Especialidade.getArea() == null || Especialidade.getArea().isEmpty()) {
+            throw new PasswordException("A área não pode ser vazio.");
+        }
     }
 }

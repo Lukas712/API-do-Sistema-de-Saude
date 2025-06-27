@@ -1,14 +1,15 @@
 package br.ufjf.ssapi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import br.ufjf.ssapi.model.repository.*;
-import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
+
+import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.model.entity.Sala;
+import br.ufjf.ssapi.model.repository.SalaRepository;
 
 
 @Service
@@ -41,6 +42,8 @@ public class SalaService {
     }
 
     public void validar(Sala Sala) throws PasswordException {
-        
+        if (Sala.getEquipamento() == null || Sala.getEquipamento().isEmpty()) {
+            throw new PasswordException("O equipamento não pode ser vazio.");
+        }
     }
 }

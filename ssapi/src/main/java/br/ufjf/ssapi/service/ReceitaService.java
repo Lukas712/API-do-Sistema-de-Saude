@@ -1,14 +1,15 @@
 package br.ufjf.ssapi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import br.ufjf.ssapi.model.repository.*;
-import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
+
+import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.model.entity.Receita;
+import br.ufjf.ssapi.model.repository.ReceitaRepository;
 
 
 @Service
@@ -41,6 +42,8 @@ public class ReceitaService {
     }
 
     public void validar(Receita Receita) throws PasswordException {
-        
+        if (Receita.getDescricao() == null || Receita.getDescricao().isEmpty()) {
+            throw new PasswordException("A descricao não pode ser vazia.");
+        }
     }
 }
