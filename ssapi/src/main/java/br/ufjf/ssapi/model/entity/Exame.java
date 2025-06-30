@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.model.entity;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -15,7 +17,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Exame{
+public class Exame {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +33,16 @@ public class Exame{
     @ManyToOne
     private Enfermeiro enfermeiro;
 
-    public boolean validaValidade(Date validade){
-        return false;
+    public boolean validaValidade(Date validade) {
+        if (validade == null)
+            return false;
+
+        LocalDate dataValidade = validade.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        LocalDate hoje = LocalDate.now();
+
+        return !dataValidade.isBefore(hoje);
     }
 }

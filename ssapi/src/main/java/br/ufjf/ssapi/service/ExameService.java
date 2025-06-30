@@ -1,14 +1,15 @@
 package br.ufjf.ssapi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import br.ufjf.ssapi.model.repository.*;
-import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
+
+import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.model.entity.Exame;
+import br.ufjf.ssapi.model.repository.ExameRepository;
 
 
 @Service
@@ -41,7 +42,7 @@ public class ExameService {
     }
 
     public void validar(Exame Exame) throws PasswordException {
-        if (Exame.validaValidade(Exame.getValidade())) {
+        if (!Exame.validaValidade(Exame.getValidade())) {
             throw new PasswordException("Validade esta no formato incorreto");
         }
         if (Exame.getDescricao() == null || Exame.getDescricao().isEmpty()) {

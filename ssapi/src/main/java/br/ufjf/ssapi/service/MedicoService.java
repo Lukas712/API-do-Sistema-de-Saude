@@ -1,14 +1,15 @@
 package br.ufjf.ssapi.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
-import br.ufjf.ssapi.model.repository.*;
-import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
 import org.springframework.transaction.annotation.Transactional;
+
+import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.model.entity.Medico;
+import br.ufjf.ssapi.model.repository.MedicoRepository;
 
 @Service
 public class MedicoService {
@@ -43,19 +44,19 @@ public class MedicoService {
         if (Medico.getNome() == null || Medico.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
-        if (Medico.getNome() == null || Medico.getNome().isEmpty()) {
-            throw new PasswordException("O nome não pode ser vazio.");
+        if (Medico.getCrm() == null || Medico.getNome().isEmpty()) {
+            throw new PasswordException("O crm não pode ser vazio.");
         }
-        if (Medico.validaEmail(Medico.getEmail())) {
+        if (!Medico.validaEmail(Medico.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");
         }
-        if (Medico.validaCPF(Medico.getCpf())) {
+        if (!Medico.validaCPF(Medico.getCpf())) {
             throw new PasswordException("O cpf está no formato incorreto.");
         }
-        if (Medico.validaDataNascimento(Medico.getDataNascimento())) {
+        if (!Medico.validaDataNascimento(Medico.getDataNascimento())) {
             throw new PasswordException("A data está no formato incorreto.");
         }
-        if (Medico.validaTelefone(Medico.getTelefone())) {
+        if (!Medico.validaTelefone(Medico.getTelefone())) {
             throw new PasswordException("O telefone está no formato incorreto.");
         }
     }

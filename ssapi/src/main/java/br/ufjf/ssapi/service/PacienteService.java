@@ -44,16 +44,16 @@ public class PacienteService {
         if (Paciente.getNome() == null || Paciente.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
-        if (Paciente.validaEmail(Paciente.getEmail())) {
+        if (!Paciente.validaEmail(Paciente.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");
         }
-        if (Paciente.validaCPF(Paciente.getCpf())) {
+        if (!Paciente.validaCPF(Paciente.getCpf())) {
             throw new PasswordException("O cpf está no formato incorreto.");
         }
-        if (Paciente.validaDataNascimento(Paciente.getDataNascimento())) {
+        if (!Paciente.validaDataNascimento(Paciente.getDataNascimento())) {
             throw new PasswordException("A data está no formato incorreto.");
         }
-        if (Paciente.validaTelefone(Paciente.getTelefone())) {
+        if (!Paciente.validaTelefone(Paciente.getTelefone())) {
             throw new PasswordException("O telefone está no formato incorreto.");
         }
     }
