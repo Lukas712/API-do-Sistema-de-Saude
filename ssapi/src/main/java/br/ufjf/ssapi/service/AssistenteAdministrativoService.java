@@ -15,46 +15,46 @@ import br.ufjf.ssapi.model.repository.AssistenteAdministrativoRepository;
 @Service
 public class AssistenteAdministrativoService {
 
-    private final AssistenteAdministrativoRepository AssistenteAdministrativoRepository;
+    private final AssistenteAdministrativoRepository assistenteAdministrativoRepository;
 
-    public AssistenteAdministrativoService(AssistenteAdministrativoRepository AssistenteAdministrativoRepository) {
-        this.AssistenteAdministrativoRepository = AssistenteAdministrativoRepository;
+    public AssistenteAdministrativoService(AssistenteAdministrativoRepository assistenteAdministrativoRepository) {
+        this.assistenteAdministrativoRepository = assistenteAdministrativoRepository;
     }
 
     public List<AssistenteAdministrativo> getAssistenteAdministrativos() {
-        return AssistenteAdministrativoRepository.findAll();
+        return assistenteAdministrativoRepository.findAll();
     }
 
     public Optional<AssistenteAdministrativo> getAssistenteAdministrativo(Long id) {
-        return AssistenteAdministrativoRepository.findById(id);
+        return assistenteAdministrativoRepository.findById(id);
     }
 
     @Transactional
-    public AssistenteAdministrativo salvar(AssistenteAdministrativo AssistenteAdministrativo) {
-        validar(AssistenteAdministrativo);
-        return AssistenteAdministrativoRepository.save(AssistenteAdministrativo);
+    public AssistenteAdministrativo salvar(AssistenteAdministrativo assistenteAdministrativo) {
+        validar(assistenteAdministrativo);
+        return assistenteAdministrativoRepository.save(assistenteAdministrativo);
     }
 
     @Transactional
-    public void excluir(AssistenteAdministrativo AssistenteAdministrativo) {
-        Objects.requireNonNull(AssistenteAdministrativo.getId());
-        AssistenteAdministrativoRepository.delete(AssistenteAdministrativo);
+    public void excluir(AssistenteAdministrativo assistenteAdministrativo) {
+        Objects.requireNonNull(assistenteAdministrativo.getId());
+        assistenteAdministrativoRepository.delete(assistenteAdministrativo);
     }
 
-    public void validar(AssistenteAdministrativo AssistenteAdministrativo) throws PasswordException {
-        if (AssistenteAdministrativo.getNome() == null || AssistenteAdministrativo.getNome().isEmpty()) {
+    public void validar(AssistenteAdministrativo assistenteAdministrativo) throws PasswordException {
+        if (!assistenteAdministrativo.validaNome(assistenteAdministrativo.getNome())) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
-        if (!AssistenteAdministrativo.validaEmail(AssistenteAdministrativo.getEmail())) {
+        if (!assistenteAdministrativo.validaEmail(assistenteAdministrativo.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");
         }
-        if (!AssistenteAdministrativo.validaCPF(AssistenteAdministrativo.getCpf())) {
+        if (!assistenteAdministrativo.validaCPF(assistenteAdministrativo.getCpf())) {
             throw new PasswordException("O cpf está no formato incorreto.");
         }
-        if (!AssistenteAdministrativo.validaDataNascimento(AssistenteAdministrativo.getDataNascimento())) {
+        if (!assistenteAdministrativo.validaDataNascimento(assistenteAdministrativo.getDataNascimento())) {
             throw new PasswordException("A data está no formato incorreto.");
         }
-        if (!AssistenteAdministrativo.validaTelefone(AssistenteAdministrativo.getTelefone())) {
+        if (!assistenteAdministrativo.validaTelefone(assistenteAdministrativo.getTelefone())) {
             throw new PasswordException("O telefone está no formato incorreto.");
         }
     }

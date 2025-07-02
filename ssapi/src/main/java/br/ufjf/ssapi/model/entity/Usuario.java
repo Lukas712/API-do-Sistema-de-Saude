@@ -10,13 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-
-
 
 @Entity
 
@@ -82,6 +75,27 @@ public class Usuario {
         }
 
         return true;
+    }
+
+    public boolean validaNome(String nome) {
+        if (nome == null || nome.isEmpty())
+            return false;
+
+        String regex = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$";
+        return Pattern.matches(regex, nome);
+    }
+
+    public boolean validaGenero(String genero) {
+        if (genero == null || genero.isEmpty())
+            return false;
+
+        String[] generosValidos = { "Masculino", "Feminino", "Outro" };
+        for (String gen : generosValidos) {
+            if (gen.equalsIgnoreCase(genero)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public Long getId() {

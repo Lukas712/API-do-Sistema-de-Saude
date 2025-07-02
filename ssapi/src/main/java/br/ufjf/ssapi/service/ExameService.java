@@ -15,40 +15,40 @@ import br.ufjf.ssapi.model.repository.ExameRepository;
 @Service
 public class ExameService {
 
-    private final ExameRepository ExameRepository;
+    private final ExameRepository exameRepository;
 
-    public ExameService(ExameRepository ExameRepository) {
-        this.ExameRepository = ExameRepository;
+    public ExameService(ExameRepository exameRepository) {
+        this.exameRepository = exameRepository;
     }
 
     public List<Exame> getExames() {
-        return ExameRepository.findAll();
+        return exameRepository.findAll();
     }
 
     public Optional<Exame> getExame(Long id) {
-        return ExameRepository.findById(id);
+        return exameRepository.findById(id);
     }
 
     @Transactional
-    public Exame salvar(Exame Exame) {
-        validar(Exame);
-        return ExameRepository.save(Exame);
+    public Exame salvar(Exame exame) {
+        validar(exame);
+        return exameRepository.save(exame);
     }
 
     @Transactional
-    public void excluir(Exame Exame) {
-        Objects.requireNonNull(Exame.getId());
-        ExameRepository.delete(Exame);
+    public void excluir(Exame exame) {
+        Objects.requireNonNull(exame.getId());
+        exameRepository.delete(exame);
     }
 
-    public void validar(Exame Exame) throws PasswordException {
-        if (!Exame.validaValidade(Exame.getValidade())) {
+    public void validar(Exame exame) throws PasswordException {
+        if (!exame.validaValidade(exame.getValidade())) {
             throw new PasswordException("Validade esta no formato incorreto");
         }
-        if (Exame.getDescricao() == null || Exame.getDescricao().isEmpty()) {
+        if (exame.getDescricao() == null || exame.getDescricao().isEmpty()) {
             throw new PasswordException("A descricao não pode ser vazia.");
         }
-        if (Exame.getLaudo() == null || Exame.getLaudo().isEmpty()) {
+        if (exame.getLaudo() == null || exame.getLaudo().isEmpty()) {
             throw new PasswordException("O laudo não pode ser vazio.");
         }
     }

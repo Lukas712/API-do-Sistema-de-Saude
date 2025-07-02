@@ -14,34 +14,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class MedicamentoService {
 
-    private final MedicamentoRepository MedicamentoRepository;
+    private final MedicamentoRepository medicamentoRepository;
 
-    public MedicamentoService(MedicamentoRepository MedicamentoRepository) {
-        this.MedicamentoRepository = MedicamentoRepository;
+    public MedicamentoService(MedicamentoRepository medicamentoRepository) {
+        this.medicamentoRepository = medicamentoRepository;
     }
 
     public List<Medicamento> getMedicamentos() {
-        return MedicamentoRepository.findAll();
+        return medicamentoRepository.findAll();
     }
 
     public Optional<Medicamento> getMedicamento(Long id) {
-        return MedicamentoRepository.findById(id);
+        return medicamentoRepository.findById(id);
     }
 
     @Transactional
-    public Medicamento salvar(Medicamento Medicamento) {
-        validar(Medicamento);
-        return MedicamentoRepository.save(Medicamento);
+    public Medicamento salvar(Medicamento medicamento) {
+        validar(medicamento);
+        return medicamentoRepository.save(medicamento);
     }
 
     @Transactional
-    public void excluir(Medicamento Medicamento) {
-        Objects.requireNonNull(Medicamento.getId());
-        MedicamentoRepository.delete(Medicamento);
+    public void excluir(Medicamento medicamento) {
+        Objects.requireNonNull(medicamento.getId());
+        medicamentoRepository.delete(medicamento);
     }
 
-    public void validar(Medicamento Medicamento) throws PasswordException {
-        if (Medicamento.getNome() == null || Medicamento.getNome().isEmpty()) {
+    public void validar(Medicamento medicamento) throws PasswordException {
+        if (medicamento.getNome() == null || medicamento.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
     }

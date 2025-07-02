@@ -15,34 +15,34 @@ import br.ufjf.ssapi.model.repository.SalaRepository;
 @Service
 public class SalaService {
 
-    private final SalaRepository SalaRepository;
+    private final SalaRepository salaRepository;
 
-    public SalaService(SalaRepository SalaRepository) {
-        this.SalaRepository = SalaRepository;
+    public SalaService(SalaRepository salaRepository) {
+        this.salaRepository = salaRepository;
     }
 
     public List<Sala> getSalas() {
-        return SalaRepository.findAll();
+        return salaRepository.findAll();
     }
 
     public Optional<Sala> getSala(Long id) {
-        return SalaRepository.findById(id);
+        return salaRepository.findById(id);
     }
 
     @Transactional
-    public Sala salvar(Sala Sala) {
-        validar(Sala);
-        return SalaRepository.save(Sala);
+    public Sala salvar(Sala sala) {
+        validar(sala);
+        return salaRepository.save(sala);
     }
 
     @Transactional
-    public void excluir(Sala Sala) {
-        Objects.requireNonNull(Sala.getId());
-        SalaRepository.delete(Sala);
+    public void excluir(Sala sala) {
+        Objects.requireNonNull(sala.getId());
+        salaRepository.delete(sala);
     }
 
-    public void validar(Sala Sala) throws PasswordException {
-        if (Sala.getEquipamento() == null || Sala.getEquipamento().isEmpty()) {
+    public void validar(Sala sala) throws PasswordException {
+        if (sala.getEquipamento() == null || sala.getEquipamento().isEmpty()) {
             throw new PasswordException("O equipamento não pode ser vazio.");
         }
     }

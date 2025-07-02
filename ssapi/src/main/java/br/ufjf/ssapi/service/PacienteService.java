@@ -14,46 +14,46 @@ import br.ufjf.ssapi.model.repository.PacienteRepository;
 @Service
 public class PacienteService {
 
-    private final PacienteRepository PacienteRepository;
+    private final PacienteRepository pacienteRepository;
 
-    public PacienteService(PacienteRepository PacienteRepository) {
-        this.PacienteRepository = PacienteRepository;
+    public PacienteService(PacienteRepository pacienteRepository) {
+        this.pacienteRepository = pacienteRepository;
     }
 
     public List<Paciente> getPacientes() {
-        return PacienteRepository.findAll();
+        return pacienteRepository.findAll();
     }
 
     public Optional<Paciente> getPaciente(Long id) {
-        return PacienteRepository.findById(id);
+        return pacienteRepository.findById(id);
     }
 
     @Transactional
-    public Paciente salvar(Paciente Paciente) {
-        validar(Paciente);
-        return PacienteRepository.save(Paciente);
+    public Paciente salvar(Paciente paciente) {
+        validar(paciente);
+        return pacienteRepository.save(paciente);
     }
 
     @Transactional
-    public void excluir(Paciente Paciente) {
-        Objects.requireNonNull(Paciente.getId());
-        PacienteRepository.delete(Paciente);
+    public void excluir(Paciente paciente) {
+        Objects.requireNonNull(paciente.getId());
+        pacienteRepository.delete(paciente);
     }
 
-    public void validar(Paciente Paciente) throws PasswordException {
-        if (Paciente.getNome() == null || Paciente.getNome().isEmpty()) {
+    public void validar(Paciente paciente) throws PasswordException {
+        if (paciente.getNome() == null || paciente.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
-        if (!Paciente.validaEmail(Paciente.getEmail())) {
+        if (!paciente.validaEmail(paciente.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");
         }
-        if (!Paciente.validaCPF(Paciente.getCpf())) {
+        if (!paciente.validaCPF(paciente.getCpf())) {
             throw new PasswordException("O cpf está no formato incorreto.");
         }
-        if (!Paciente.validaDataNascimento(Paciente.getDataNascimento())) {
+        if (!paciente.validaDataNascimento(paciente.getDataNascimento())) {
             throw new PasswordException("A data está no formato incorreto.");
         }
-        if (!Paciente.validaTelefone(Paciente.getTelefone())) {
+        if (!paciente.validaTelefone(paciente.getTelefone())) {
             throw new PasswordException("O telefone está no formato incorreto.");
         }
     }

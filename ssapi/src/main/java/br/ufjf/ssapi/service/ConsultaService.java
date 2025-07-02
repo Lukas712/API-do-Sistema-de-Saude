@@ -13,34 +13,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ConsultaService {
 
-    private final ConsultaRepository ConsultaRepository;
+    private final ConsultaRepository consultaRepository;
 
-    public ConsultaService(ConsultaRepository ConsultaRepository) {
-        this.ConsultaRepository = ConsultaRepository;
+    public ConsultaService(ConsultaRepository consultaRepository) {
+        this.consultaRepository = consultaRepository;
     }
 
     public List<Consulta> getConsultas() {
-        return ConsultaRepository.findAll();
+        return consultaRepository.findAll();
     }
 
     public Optional<Consulta> getConsulta(Long id) {
-        return ConsultaRepository.findById(id);
+        return consultaRepository.findById(id);
     }
 
     @Transactional
-    public Consulta salvar(Consulta Consulta) {
-        validar(Consulta);
-        return ConsultaRepository.save(Consulta);
+    public Consulta salvar(Consulta consulta) {
+        validar(consulta);
+        return consultaRepository.save(consulta);
     }
 
     @Transactional
-    public void excluir(Consulta Consulta) {
-        Objects.requireNonNull(Consulta.getId());
-        ConsultaRepository.delete(Consulta);
+    public void excluir(Consulta consulta) {
+        Objects.requireNonNull(consulta.getId());
+        consultaRepository.delete(consulta);
     }
 
-    public void validar(Consulta Consulta) throws PasswordException {
-        if (Consulta.getDescricao() == null || Consulta.getDescricao().isEmpty()) {
+    public void validar(Consulta consulta) throws PasswordException {
+        if (consulta.getDescricao() == null || consulta.getDescricao().isEmpty()) {
             throw new PasswordException("A consulta não pode ser vazio.");
         }
     }

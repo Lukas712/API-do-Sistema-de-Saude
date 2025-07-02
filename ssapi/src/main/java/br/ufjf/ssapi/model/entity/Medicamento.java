@@ -1,13 +1,15 @@
 package br.ufjf.ssapi.model.entity;
 
+import java.util.regex.Pattern;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
+
 
 @Entity
 
@@ -46,5 +48,13 @@ public class Medicamento {
 
     public void setReceita(Receita receita) {
         this.receita = receita;
+    }
+
+    public boolean validaNome(String nome){
+        if (nome == null || nome.isEmpty())
+            return false;
+
+        String regex = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$";
+        return Pattern.matches(regex, nome);
     }
 }

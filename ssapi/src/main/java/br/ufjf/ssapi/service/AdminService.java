@@ -42,8 +42,8 @@ public class AdminService {
     }
 
     public void validar(Admin admin) throws PasswordException {
-        if (admin.getNome() == null || admin.getNome().isEmpty()) {
-            throw new PasswordException("O nome não pode ser vazio.");
+        if (!admin.validaNome(admin.getNome())) {
+            throw new PasswordException("Nome inválido");
         }
         if (!admin.validaEmail(admin.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");

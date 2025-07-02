@@ -1,14 +1,16 @@
 package br.ufjf.ssapi.model.entity;
 
+import java.util.regex.Pattern;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
+
+
 
 @Entity
 
@@ -59,5 +61,13 @@ public class Sala {
 
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
+    }
+
+    public boolean validaEquipamento(String equipamento){
+        if (equipamento == null || equipamento.isEmpty())
+            return false;
+
+        String regex = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$";
+        return Pattern.matches(regex, equipamento);
     }
 }

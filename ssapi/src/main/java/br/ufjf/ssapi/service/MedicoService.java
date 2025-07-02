@@ -14,49 +14,49 @@ import br.ufjf.ssapi.model.repository.MedicoRepository;
 @Service
 public class MedicoService {
 
-    private final MedicoRepository MedicoRepository;
+    private final MedicoRepository medicoRepository;
 
-    public MedicoService(MedicoRepository MedicoRepository) {
-        this.MedicoRepository = MedicoRepository;
+    public MedicoService(MedicoRepository medicoRepository) {
+        this.medicoRepository = medicoRepository;
     }
 
     public List<Medico> getMedicos() {
-        return MedicoRepository.findAll();
+        return medicoRepository.findAll();
     }
 
     public Optional<Medico> getMedico(Long id) {
-        return MedicoRepository.findById(id);
+        return medicoRepository.findById(id);
     }
 
     @Transactional
-    public Medico salvar(Medico Medico) {
-        validar(Medico);
-        return MedicoRepository.save(Medico);
+    public Medico salvar(Medico medico) {
+        validar(medico);
+        return medicoRepository.save(medico);
     }
 
     @Transactional
-    public void excluir(Medico Medico) {
-        Objects.requireNonNull(Medico.getId());
-        MedicoRepository.delete(Medico);
+    public void excluir(Medico medico) {
+        Objects.requireNonNull(medico.getId());
+        medicoRepository.delete(medico);
     }
 
-    public void validar(Medico Medico) throws PasswordException {
-        if (Medico.getNome() == null || Medico.getNome().isEmpty()) {
+    public void validar(Medico medico) throws PasswordException {
+        if (medico.getNome() == null || medico.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
-        if (Medico.getCrm() == null || Medico.getNome().isEmpty()) {
+        if (medico.getCrm() == null || medico.getNome().isEmpty()) {
             throw new PasswordException("O crm não pode ser vazio.");
         }
-        if (!Medico.validaEmail(Medico.getEmail())) {
+        if (!medico.validaEmail(medico.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");
         }
-        if (!Medico.validaCPF(Medico.getCpf())) {
+        if (!medico.validaCPF(medico.getCpf())) {
             throw new PasswordException("O cpf está no formato incorreto.");
         }
-        if (!Medico.validaDataNascimento(Medico.getDataNascimento())) {
+        if (!medico.validaDataNascimento(medico.getDataNascimento())) {
             throw new PasswordException("A data está no formato incorreto.");
         }
-        if (!Medico.validaTelefone(Medico.getTelefone())) {
+        if (!medico.validaTelefone(medico.getTelefone())) {
             throw new PasswordException("O telefone está no formato incorreto.");
         }
     }

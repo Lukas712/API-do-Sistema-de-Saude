@@ -15,46 +15,46 @@ import br.ufjf.ssapi.model.repository.EnfermeiroRepository;
 @Service
 public class EnfermeiroService {
 
-    private final EnfermeiroRepository EnfermeiroRepository;
+    private final EnfermeiroRepository enfermeiroRepository;
 
-    public EnfermeiroService(EnfermeiroRepository EnfermeiroRepository) {
-        this.EnfermeiroRepository = EnfermeiroRepository;
+    public EnfermeiroService(EnfermeiroRepository enfermeiroRepository) {
+        this.enfermeiroRepository = enfermeiroRepository;
     }
 
     public List<Enfermeiro> getEnfermeiros() {
-        return EnfermeiroRepository.findAll();
+        return enfermeiroRepository.findAll();
     }
 
     public Optional<Enfermeiro> getEnfermeiro(Long id) {
-        return EnfermeiroRepository.findById(id);
+        return enfermeiroRepository.findById(id);
     }
 
     @Transactional
-    public Enfermeiro salvar(Enfermeiro Enfermeiro) {
-        validar(Enfermeiro);
-        return EnfermeiroRepository.save(Enfermeiro);
+    public Enfermeiro salvar(Enfermeiro enfermeiro) {
+        validar(enfermeiro);
+        return enfermeiroRepository.save(enfermeiro);
     }
 
     @Transactional
-    public void excluir(Enfermeiro Enfermeiro) {
-        Objects.requireNonNull(Enfermeiro.getId());
-        EnfermeiroRepository.delete(Enfermeiro);
+    public void excluir(Enfermeiro enfermeiro) {
+        Objects.requireNonNull(enfermeiro.getId());
+        enfermeiroRepository.delete(enfermeiro);
     }
 
-    public void validar(Enfermeiro Enfermeiro) throws PasswordException {
-        if (Enfermeiro.getNome() == null || Enfermeiro.getNome().isEmpty()) {
+    public void validar(Enfermeiro enfermeiro) throws PasswordException {
+        if (enfermeiro.getNome() == null || enfermeiro.getNome().isEmpty()) {
             throw new PasswordException("O nome não pode ser vazio.");
         }
-        if (!Enfermeiro.validaEmail(Enfermeiro.getEmail())) {
+        if (!enfermeiro.validaEmail(enfermeiro.getEmail())) {
             throw new PasswordException("O email está no formato incorreto.");
         }
-        if (!Enfermeiro.validaCPF(Enfermeiro.getCpf())) {
+        if (!enfermeiro.validaCPF(enfermeiro.getCpf())) {
             throw new PasswordException("O cpf está no formato incorreto.");
         }
-        if (!Enfermeiro.validaDataNascimento(Enfermeiro.getDataNascimento())) {
+        if (!enfermeiro.validaDataNascimento(enfermeiro.getDataNascimento())) {
             throw new PasswordException("A data está no formato incorreto.");
         }
-        if (!Enfermeiro.validaTelefone(Enfermeiro.getTelefone())) {
+        if (!enfermeiro.validaTelefone(enfermeiro.getTelefone())) {
             throw new PasswordException("O telefone está no formato incorreto.");
         }
     }

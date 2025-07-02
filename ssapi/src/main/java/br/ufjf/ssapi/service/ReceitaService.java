@@ -15,34 +15,34 @@ import br.ufjf.ssapi.model.repository.ReceitaRepository;
 @Service
 public class ReceitaService {
 
-    private final ReceitaRepository ReceitaRepository;
+    private final ReceitaRepository receitaRepository;
 
-    public ReceitaService(ReceitaRepository ReceitaRepository) {
-        this.ReceitaRepository = ReceitaRepository;
+    public ReceitaService(ReceitaRepository receitaRepository) {
+        this.receitaRepository = receitaRepository;
     }
 
     public List<Receita> getReceitas() {
-        return ReceitaRepository.findAll();
+        return receitaRepository.findAll();
     }
 
     public Optional<Receita> getReceita(Long id) {
-        return ReceitaRepository.findById(id);
+        return receitaRepository.findById(id);
     }
 
     @Transactional
-    public Receita salvar(Receita Receita) {
-        validar(Receita);
-        return ReceitaRepository.save(Receita);
+    public Receita salvar(Receita receita) {
+        validar(receita);
+        return receitaRepository.save(receita);
     }
 
     @Transactional
-    public void excluir(Receita Receita) {
-        Objects.requireNonNull(Receita.getId());
-        ReceitaRepository.delete(Receita);
+    public void excluir(Receita receita) {
+        Objects.requireNonNull(receita.getId());
+        receitaRepository.delete(receita);
     }
 
-    public void validar(Receita Receita) throws PasswordException {
-        if (Receita.getDescricao() == null || Receita.getDescricao().isEmpty()) {
+    public void validar(Receita receita) throws PasswordException {
+        if (receita.getDescricao() == null || receita.getDescricao().isEmpty()) {
             throw new PasswordException("A descricao não pode ser vazia.");
         }
     }
