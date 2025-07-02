@@ -4,19 +4,19 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
+
+
 public class Exame {
 
     @Id
@@ -44,5 +44,53 @@ public class Exame {
         LocalDate hoje = LocalDate.now();
 
         return !dataValidade.isBefore(hoje);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getLaudo() {
+        return laudo;
+    }
+
+    public void setLaudo(String laudo) {
+        this.laudo = laudo;
+    }
+
+    public Date getValidade() {
+        return validade;
+    }
+
+    public void setValidade(Date validade) {
+        this.validade = validade;
+    }
+
+    public Paciente getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(Paciente paciente) {
+        this.paciente = paciente;
+    }
+
+    public Enfermeiro getEnfermeiro() {
+        return enfermeiro;
+    }
+
+    public void setEnfermeiro(Enfermeiro enfermeiro) {
+        this.enfermeiro = enfermeiro;
     }
 }
