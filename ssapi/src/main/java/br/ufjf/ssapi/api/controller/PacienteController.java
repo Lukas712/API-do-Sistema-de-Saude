@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.ufjf.ssapi.api.dto.PacienteDTO;
 import br.ufjf.ssapi.model.entity.Paciente;
-import br.ufjf.ssapi.service.MedicoService;
+import br.ufjf.ssapi.service.PacienteService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/pacientes")
 @CrossOrigin
 public class PacienteController {
-    private final MedicoService service;
+    private final PacienteService service;
 
     @GetMapping()
     public ResponseEntity get() {
