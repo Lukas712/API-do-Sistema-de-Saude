@@ -6,14 +6,15 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
-@Entity
+@MappedSuperclass
 
 public class Usuario {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -98,14 +99,6 @@ public class Usuario {
         return false;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -152,6 +145,14 @@ public class Usuario {
 
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public boolean validaDataNascimento(Date dataNac) {

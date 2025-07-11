@@ -17,21 +17,13 @@ import javax.persistence.ManyToOne;
 
 public class Enfermeiro extends Usuario{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
     
 
     @ManyToOne
     private Hospital hospital;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     public Hospital getHospital() {
         return hospital;

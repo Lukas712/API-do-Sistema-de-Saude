@@ -17,9 +17,7 @@ import javax.persistence.OneToOne;
 
 public class Medico extends Usuario{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
 
     private String crm;
 
@@ -29,13 +27,7 @@ public class Medico extends Usuario{
     @OneToOne
     private Especialidade especialidade;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     public String getCrm() {
         return crm;

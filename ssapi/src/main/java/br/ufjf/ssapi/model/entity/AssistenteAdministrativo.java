@@ -22,13 +22,7 @@ public class AssistenteAdministrativo extends Usuario{
     @ManyToOne
     private Hospital hospital;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    
 
     public Hospital getHospital() {
         return hospital;
