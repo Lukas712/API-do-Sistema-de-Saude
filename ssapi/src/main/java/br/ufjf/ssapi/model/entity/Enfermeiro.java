@@ -11,15 +11,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-
-
-
-
 public class Enfermeiro extends Usuario{
-
-    
-    
-
     @ManyToOne
     private Hospital hospital;
 

@@ -9,10 +9,6 @@ import javax.persistence.Id;
 
 
 @Entity
-
-
-
-
 public class Receita {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

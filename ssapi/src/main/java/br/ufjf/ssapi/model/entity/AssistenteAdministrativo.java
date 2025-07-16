@@ -10,15 +10,7 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-
-
-
 public class AssistenteAdministrativo extends Usuario{
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne
     private Hospital hospital;
 

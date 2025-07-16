@@ -14,9 +14,6 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-
-
-
 public class Exame {
 
     @Id

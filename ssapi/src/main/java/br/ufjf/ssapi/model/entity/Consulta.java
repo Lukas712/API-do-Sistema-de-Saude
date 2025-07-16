@@ -11,9 +11,6 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-
-
-
 public class Consulta {
 
     @Id

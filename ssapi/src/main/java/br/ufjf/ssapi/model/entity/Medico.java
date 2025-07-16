@@ -11,14 +11,7 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-
-
-
-
 public class Medico extends Usuario{
-
-    
-
     private String crm;
 
     @ManyToOne

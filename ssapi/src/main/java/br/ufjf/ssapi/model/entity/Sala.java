@@ -13,10 +13,6 @@ import javax.persistence.OneToOne;
 
 
 @Entity
-
-
-
-
 public class Sala {
 
     @Id

@@ -12,9 +12,6 @@ import javax.persistence.ManyToOne;
 
 
 @Entity
-
-
-
 public class Medicamento {
 
     @Id

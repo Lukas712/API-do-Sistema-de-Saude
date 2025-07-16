@@ -12,10 +12,6 @@ import javax.persistence.Id;
 
 
 @Entity
-
-
-
-
 public class Especialidade {
 
     @Id
