@@ -4,16 +4,22 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import br.ufjf.ssapi.api.dto.AdminDTO;
+import br.ufjf.ssapi.api.dto.EspecialidadeDTO;
 import br.ufjf.ssapi.api.dto.ReceitaDTO;
+import br.ufjf.ssapi.exception.DefaultException;
+import br.ufjf.ssapi.model.entity.Especialidade;
 import br.ufjf.ssapi.model.entity.Receita;
 import br.ufjf.ssapi.service.ReceitaService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/v1/receitas")
 @CrossOrigin
 public class ReceitaController {
-     private final ReceitaService service;
+    private final ReceitaService service;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -38,5 +44,23 @@ public class ReceitaController {
             return new ResponseEntity("Receita não encontrado", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(receita.map(ReceitaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ReceitaDTO dto) {
+        try {
+            Receita receita = converter(dto);
+            receita = service.salvar(receita);
+            return new ResponseEntity(receita, HttpStatus.CREATED);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Receita converter(ReceitaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Receita receita = modelMapper.map(dto, Receita.class);
+
+        return receita;
     }
 }

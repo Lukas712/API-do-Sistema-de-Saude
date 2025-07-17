@@ -4,18 +4,26 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import br.ufjf.ssapi.api.dto.ConsultaDTO;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Consulta;
+import br.ufjf.ssapi.model.entity.Hospital;
+import br.ufjf.ssapi.model.entity.Paciente;
 import br.ufjf.ssapi.service.ConsultaService;
+import br.ufjf.ssapi.service.HospitalService;
+import br.ufjf.ssapi.service.PacienteService;
+import br.ufjf.ssapi.service.ReceitaService;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -39,5 +47,38 @@ public class ConsultaController {
             return new ResponseEntity("Consulta não encontrada", HttpStatus.NOT_FOUND);
         }
         return ResponseEntity.ok(consulta.map(ConsultaDTO::create));
+    }
+
+    @PostMapping()
+    public ResponseEntity post(@RequestBody ConsultaDTO dto) {
+        try {
+            Consulta consulta = converter(dto);
+            consulta = service.salvar(consulta);
+            return new ResponseEntity(consulta, HttpStatus.CREATED);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+     public Consulta converter(ConsultaDTO dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        Consulta consulta = modelMapper.map(dto, Consulta.class);
+        if (dto.getIdReceita() != null) {
+            Optional<Receita> receita = ReceitaService.getReceita(dto.getIdReceita());
+            if (!receita.isPresent()) {
+                consulta.setReceita(null);
+            } else {
+                consulta.setReceita(receita.get());
+            }
+        }
+        if (dto.getIdHospital() != null) {
+            Optional<Paciente> paciente = PacienteService.getPaciente(dto.getIdPaciente());
+            if (!paciente.isPresent()) {
+                consulta.setPaciente(null);
+            } else {
+                consulta.setPaciente(paciente.get());
+            }
+        }
+        return consulta;
     }
 }
