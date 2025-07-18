@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class AdminController {
     private final AdminService service;
+    private final HospitalService hospitalService;
 
 
     @GetMapping()
@@ -61,7 +62,7 @@ public class AdminController {
         ModelMapper modelMapper = new ModelMapper();
         Admin admin = modelMapper.map(dto, Admin.class);
         if (dto.getIdHospital() != null) {
-            Optional<Hospital> hospital = HospitalService.getHospital(dto.getIdHospital());
+            Optional<Hospital> hospital = hospitalService.getHospital(dto.getIdHospital());
             if (!hospital.isPresent()) {
                 admin.setHospital(null);
             } else {

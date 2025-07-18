@@ -20,6 +20,7 @@ import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Consulta;
 import br.ufjf.ssapi.model.entity.Hospital;
 import br.ufjf.ssapi.model.entity.Paciente;
+import br.ufjf.ssapi.model.entity.Receita;
 import br.ufjf.ssapi.service.ConsultaService;
 import br.ufjf.ssapi.service.HospitalService;
 import br.ufjf.ssapi.service.PacienteService;
@@ -32,6 +33,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class ConsultaController {
      private final ConsultaService service;
+     private final PacienteService pacienteService;
+     private final ReceitaService receitaService;
 
 
     @GetMapping()
@@ -64,15 +67,15 @@ public class ConsultaController {
         ModelMapper modelMapper = new ModelMapper();
         Consulta consulta = modelMapper.map(dto, Consulta.class);
         if (dto.getIdReceita() != null) {
-            Optional<Receita> receita = ReceitaService.getReceita(dto.getIdReceita());
+            Optional<Receita> receita = receitaService.getReceita(dto.getIdReceita());
             if (!receita.isPresent()) {
                 consulta.setReceita(null);
             } else {
                 consulta.setReceita(receita.get());
             }
         }
-        if (dto.getIdHospital() != null) {
-            Optional<Paciente> paciente = PacienteService.getPaciente(dto.getIdPaciente());
+        if (dto.getIdPaciente() != null) {
+            Optional<Paciente> paciente = pacienteService.getPaciente(dto.getIdPaciente());
             if (!paciente.isPresent()) {
                 consulta.setPaciente(null);
             } else {

@@ -33,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class EnfermeiroController {
     private final EnfermeiroService service;
+    private final HospitalService hospitalService;
 
 
     @GetMapping()
@@ -65,7 +66,7 @@ public class EnfermeiroController {
         ModelMapper modelMapper = new ModelMapper();
         Enfermeiro enfermeiro = modelMapper.map(dto, Enfermeiro.class);
         if (dto.getIdHospital() != null) {
-            Optional<Hospital> hospital = HospitalService.getHospital(dto.getIdHospital());
+            Optional<Hospital> hospital = hospitalService.getHospital(dto.getIdHospital());
             if (!hospital.isPresent()) {
                 enfermeiro.setHospital(null);
             } else {

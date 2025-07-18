@@ -29,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class MedicamentoController {
     private final MedicamentoService service;
+    private final ReceitaService receitaService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -60,7 +61,7 @@ public class MedicamentoController {
         ModelMapper modelMapper = new ModelMapper();
         Medicamento medicamento = modelMapper.map(dto, Medicamento.class);
         if(medicamento.getReceita() != null){
-            Optional<Receita> receita = ReceitaService.getReceita(dto.getIdReceita());
+            Optional<Receita> receita = receitaService.getReceita(dto.getIdReceita());
             if(!receita.isPresent()){
                 medicamento.setReceita(null);
             } else{

@@ -19,7 +19,6 @@ import br.ufjf.ssapi.api.dto.AdminDTO;
 import br.ufjf.ssapi.api.dto.AssistenteAdministrativoDTO;
 import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Admin;
-import br.ufjf.ssapi.model.entity.AssistenteAdministrativo
 import br.ufjf.ssapi.model.entity.Hospital;
 import br.ufjf.ssapi.model.entity.AssistenteAdministrativo;
 import br.ufjf.ssapi.service.AssistenteAdministrativoService;
@@ -32,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class AssistenteAdministrativoController {
     private final AssistenteAdministrativoService service;
+    private final HospitalService hospitalService;
 
 
     @GetMapping()
@@ -64,7 +64,7 @@ public class AssistenteAdministrativoController {
         ModelMapper modelMapper = new ModelMapper();
         AssistenteAdministrativo assistenteAdministrativo = modelMapper.map(dto, AssistenteAdministrativo.class);
         if (dto.getIdHospital() != null) {
-            Optional<Hospital> hospital = HospitalService.getHospital(dto.getIdHospital());
+            Optional<Hospital> hospital = hospitalService.getHospital(dto.getIdHospital());
             if (!hospital.isPresent()) {
                 assistenteAdministrativo.setHospital(null);
             } else {

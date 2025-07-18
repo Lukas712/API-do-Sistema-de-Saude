@@ -20,6 +20,7 @@ import br.ufjf.ssapi.api.dto.SalaDTO;
 import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Enfermeiro;
 import br.ufjf.ssapi.model.entity.Exame;
+import br.ufjf.ssapi.model.entity.Hospital;
 import br.ufjf.ssapi.model.entity.Paciente;
 import br.ufjf.ssapi.model.entity.Sala;
 import br.ufjf.ssapi.service.EnfermeiroService;
@@ -35,6 +36,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class SalaController {
     private final SalaService service;
+    private final ExameService exameService;
+    private final HospitalService hospitalService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -67,7 +70,7 @@ public class SalaController {
         ModelMapper modelMapper = new ModelMapper();
         Sala sala = modelMapper.map(dto, Sala.class);
         if (dto.getIdExame() != null) {
-            Optional<Exame> exame = ExameService.getExame(dto.getIdExame());
+            Optional<Exame> exame = exameService.getExame(dto.getIdExame());
             if (!exame.isPresent()) {
                 sala.setExame(null);
             } else {
@@ -75,7 +78,7 @@ public class SalaController {
             }
         }
         if(dto.getIdHospital() != null) {
-            Optional<Hospital> hospital = HospitalService.getHospital(dto.getIdHospital());
+            Optional<Hospital> hospital = hospitalService.getHospital(dto.getIdHospital());
             if (!hospital.isPresent()) {
                 sala.setHospital(null);
             } else {
@@ -84,6 +87,4 @@ public class SalaController {
         }
         return sala;
     }
-}
-    
 }

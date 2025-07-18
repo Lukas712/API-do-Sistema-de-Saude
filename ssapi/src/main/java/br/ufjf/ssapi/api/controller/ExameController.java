@@ -26,6 +26,7 @@ import br.ufjf.ssapi.service.EnfermeiroService;
 import br.ufjf.ssapi.service.ExameService;
 import br.ufjf.ssapi.service.HospitalService;
 import br.ufjf.ssapi.service.PacienteService;
+import br.ufjf.ssapi.model.entity.Paciente;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -34,6 +35,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class ExameController {
     private final ExameService service;
+    private final EnfermeiroService enfermeiroService;
+    private final PacienteService pacienteService;
 
 
     @GetMapping()
@@ -65,7 +68,6 @@ public class ExameController {
     public Exame converter(ExameDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Exame exame = modelMapper.map(dto, Exame.class);
-        EnfermeiroService enfermeiroService;
         if (dto.getIdEnfermeiro() != null) {
             Optional<Enfermeiro> enfermeiro = enfermeiroService.getEnfermeiro(dto.getIdEnfermeiro());
             if (!enfermeiro.isPresent()) {
@@ -75,7 +77,7 @@ public class ExameController {
             }
         }
         if(dto.getIdPaciente() != null) {
-            Optional<Paciente> paciente = PacienteService.getPaciente(dto.getIdPaciente());
+            Optional<Paciente> paciente = pacienteService.getPaciente(dto.getIdPaciente());
             if (!paciente.isPresent()) {
                 exame.setPaciente(null);
             } else {

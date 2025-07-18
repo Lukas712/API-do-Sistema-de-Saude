@@ -31,6 +31,8 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin
 public class MedicoController {
     private final MedicoService service;
+    private final EspecialidadeService especialidadeService;
+    private final HospitalService hospitalService;
 
     @GetMapping()
     public ResponseEntity get() {
@@ -62,7 +64,7 @@ public class MedicoController {
         ModelMapper modelMapper = new ModelMapper();
         Medico medico = modelMapper.map(dto, Medico.class);
         if (dto.getIdEspecialidade() != null) {
-            Optional<Especialidade> especialidade = EspecialidadeService.getEspecialidade(dto.getIdEspecialidade());
+            Optional<Especialidade> especialidade = especialidadeService.getEspecialidade(dto.getIdEspecialidade());
             if (!especialidade.isPresent()) {
                 medico.setEspecialidade(null);
             } else {
@@ -70,13 +72,13 @@ public class MedicoController {
             }
         }
         if(dto.getIdHospital() != null) {
-            Optional<Hospital> hospital = HospitalService.getHospital(dto.getIdHospital());
+            Optional<Hospital> hospital = hospitalService.getHospital(dto.getIdHospital());
             if (!hospital.isPresent()) {
                 medico.setHospital(null);
             } else {
                 medico.setHospital(hospital.get());
             }
         }
-        return Medico;
+        return medico;
     }
 }

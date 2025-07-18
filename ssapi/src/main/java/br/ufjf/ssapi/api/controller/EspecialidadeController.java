@@ -20,7 +20,6 @@ import br.ufjf.ssapi.api.dto.EnfermeiroDTO;
 import br.ufjf.ssapi.api.dto.EspecialidadeDTO;
 import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Admin;
-import br.ufjf.ssapi.model.entity   Especialidade;
 import br.ufjf.ssapi.model.entity.Especialidade;
 import br.ufjf.ssapi.model.entity.Hospital;
 import br.ufjf.ssapi.service.EspecialidadeService;
