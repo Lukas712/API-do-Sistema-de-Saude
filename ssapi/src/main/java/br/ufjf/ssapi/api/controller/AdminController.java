@@ -8,9 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +32,6 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
     private final AdminService service;
     private final HospitalService hospitalService;
-
 
     @GetMapping()
     public ResponseEntity get() {
@@ -58,7 +59,36 @@ public class AdminController {
         }
     }
 
-     public Admin converter(AdminDTO dto) {
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AdminDTO dto) {
+        if (!service.getAdmin(id).isPresent()) {
+            return new ResponseEntity("Admin não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Admin admin = converter(dto);
+            admin.setId(id);
+            service.salvar(admin);
+            return ResponseEntity.ok(admin);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Admin> admin = service.getAdmin(id);
+        if (!admin.isPresent()) {
+            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(admin.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    public Admin converter(AdminDTO dto) {
         ModelMapper modelMapper = new ModelMapper();
         Admin admin = modelMapper.map(dto, Admin.class);
         if (dto.getIdHospital() != null) {
@@ -72,5 +102,4 @@ public class AdminController {
         return admin;
     }
 
-    
 }

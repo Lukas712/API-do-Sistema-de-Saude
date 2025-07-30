@@ -8,9 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +57,35 @@ public class AssistenteAdministrativoController {
             AssistenteAdministrativo assistenteAdministrativo = converter(dto);
             assistenteAdministrativo = service.salvar(assistenteAdministrativo);
             return new ResponseEntity(assistenteAdministrativo, HttpStatus.CREATED);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AssistenteAdministrativoDTO dto) {
+        if (!service.getAssistenteAdministrativo(id).isPresent()) {
+            return new ResponseEntity("Assistente Administrativo não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            AssistenteAdministrativo assistenteAdministrativo = converter(dto);
+            assistenteAdministrativo.setId(id);
+            service.salvar(assistenteAdministrativo);
+            return ResponseEntity.ok(assistenteAdministrativo);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<AssistenteAdministrativo> assistenteAdministrativo = service.getAssistenteAdministrativo(id);
+        if (!assistenteAdministrativo.isPresent()) {
+            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(assistenteAdministrativo.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (DefaultException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

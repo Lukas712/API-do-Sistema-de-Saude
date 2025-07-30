@@ -8,9 +8,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,6 +57,35 @@ public class EspecialidadeController {
             Especialidade especialidade = converter(dto);
             especialidade = service.salvar(especialidade);
             return new ResponseEntity(especialidade, HttpStatus.CREATED);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EspecialidadeDTO dto) {
+        if (!service.getEspecialidade(id).isPresent()) {
+            return new ResponseEntity("Especialidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            Especialidade especialidade = converter(dto);
+            especialidade.setId(id);
+            service.salvar(especialidade);
+            return ResponseEntity.ok(especialidade);
+        } catch (DefaultException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Especialidade> especialidade = service.getEspecialidade(id);
+        if (!especialidade.isPresent()) {
+            return new ResponseEntity("Especialidade não encontrada", HttpStatus.NOT_FOUND);
+        }
+        try {
+            service.excluir(especialidade.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         } catch (DefaultException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
