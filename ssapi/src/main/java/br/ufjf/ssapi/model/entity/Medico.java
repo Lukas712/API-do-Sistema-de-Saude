@@ -45,4 +45,16 @@ public class Medico extends Usuario{
     public void setEspecialidade(Especialidade especialidade) {
         this.especialidade = especialidade;
     }
+
+    public boolean validaCrm() {
+        return crm != null && !crm.isEmpty();
+    }
+
+    public boolean validaEspecialidade() {
+        return especialidade != null;
+    }
+
+    public boolean validaHospital() {
+        return hospital != null;
+    }
 }

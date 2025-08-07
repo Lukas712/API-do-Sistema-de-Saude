@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Sala;
 import br.ufjf.ssapi.model.repository.SalaRepository;
 
@@ -41,9 +41,15 @@ public class SalaService {
         salaRepository.delete(sala);
     }
 
-    public void validar(Sala sala) throws PasswordException {
-        if (sala.getEquipamento() == null || sala.getEquipamento().isEmpty()) {
-            throw new PasswordException("O equipamento não pode ser vazio.");
+    public void validar(Sala sala) throws DefaultException {
+        if(!sala.validaEquipamento()) {
+            throw new DefaultException("Equipamento inválido");
+        }
+        if(!sala.validaExame()){
+            throw new DefaultException("Exame inválido");
+        }
+        if(!sala.validaHospital()){
+            throw new DefaultException("Hospital inválido");
         }
     }
 }

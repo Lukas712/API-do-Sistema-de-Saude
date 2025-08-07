@@ -81,7 +81,7 @@ public class AssistenteAdministrativoController {
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AssistenteAdministrativo> assistenteAdministrativo = service.getAssistenteAdministrativo(id);
         if (!assistenteAdministrativo.isPresent()) {
-            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Assistente não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(assistenteAdministrativo.get());

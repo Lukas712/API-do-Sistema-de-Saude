@@ -30,7 +30,7 @@ public class Exame {
     @ManyToOne
     private Enfermeiro enfermeiro;
 
-    public boolean validaValidade(Date validade) {
+    public boolean validaValidade() {
         if (validade == null)
             return false;
 
@@ -41,6 +41,30 @@ public class Exame {
         LocalDate hoje = LocalDate.now();
 
         return !dataValidade.isBefore(hoje);
+    }
+
+    public boolean validaLaudo() {
+        if (laudo == null || laudo.isEmpty())
+            return false;
+
+        String regex = "^[\\w\\s.,;:!?-]+$";
+        return laudo.matches(regex);
+    }
+
+    public boolean validaDescricao() {
+        if (descricao == null || descricao.isEmpty())
+            return false;
+
+        String regex = "^[\\w\\s.,;:!?-]+$";
+        return descricao.matches(regex);
+    }
+
+    public boolean validaPaciente() {
+        return paciente != null;
+    }
+
+    public boolean validaEnfermeiro() {
+        return enfermeiro != null;
     }
 
     public Long getId() {

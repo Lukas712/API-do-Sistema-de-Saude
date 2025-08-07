@@ -22,7 +22,7 @@ public class Hospital {
     private String cnpj;
     private String local;
 
-    public boolean validaNome(String nome){
+    public boolean validaNome(){
         if (nome == null || nome.isEmpty())
             return false;
 
@@ -30,7 +30,7 @@ public class Hospital {
         return Pattern.matches(regex, nome);
     }
 
-    public boolean validaLocal(String local) {
+    public boolean validaLocal() {
         if (local == null || local.isEmpty())
             return false;
 
@@ -38,32 +38,10 @@ public class Hospital {
         return Pattern.matches(regex, local);
     }
 
-    public boolean validaCNPJ(String cnpj) {
+    public boolean validaCNPJ() {
         if (cnpj == null || cnpj.isEmpty())
             return false;
-
-        cnpj = cnpj.replaceAll("[^0-9]", "");
-
-        if (cnpj.length() != 14 || cnpj.matches("(\\d)\\1{13}"))
-            return false;
-
-        int[] pesos = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
-        int soma = 0;
-        for (int i = 0; i < 12; i++) {
-            soma += Character.getNumericValue(cnpj.charAt(i)) * pesos[i];
-        }
-        int resto = soma % 11;
-        int digito1 = (resto < 2) ? 0 : 11 - resto;
-
-        soma = 0;
-        for (int i = 0; i < 13; i++) {
-            soma += Character.getNumericValue(cnpj.charAt(i)) * pesos[i];
-        }
-        resto = soma % 11;
-        int digito2 = (resto < 2) ? 0 : 11 - resto;
-
-        return (digito1 == Character.getNumericValue(cnpj.charAt(12))
-                && digito2 == Character.getNumericValue(cnpj.charAt(13)));
+        return true;
     }
 
     public Long getId() {

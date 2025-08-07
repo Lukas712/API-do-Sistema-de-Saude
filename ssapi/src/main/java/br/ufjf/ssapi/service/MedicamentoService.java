@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import br.ufjf.ssapi.model.repository.*;
 import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -40,9 +40,12 @@ public class MedicamentoService {
         medicamentoRepository.delete(medicamento);
     }
 
-    public void validar(Medicamento medicamento) throws PasswordException {
-        if (medicamento.getNome() == null || medicamento.getNome().isEmpty()) {
-            throw new PasswordException("O nome não pode ser vazio.");
+    public void validar(Medicamento medicamento) throws DefaultException {
+        if(!medicamento.validaNome()){
+            throw new DefaultException("Nome inválido");
+        }
+        if(!medicamento.validaReceita()){
+            throw new DefaultException("Receita inválida");
         }
     }
 }

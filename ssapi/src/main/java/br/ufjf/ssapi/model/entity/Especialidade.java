@@ -45,7 +45,7 @@ public class Especialidade {
         this.area = area;
     }
 
-    public boolean validaNome(String nome) {
+    public boolean validaNome() {
         if (nome == null || nome.isEmpty())
             return false;
 
@@ -53,7 +53,7 @@ public class Especialidade {
         return Pattern.matches(regex, nome);
     }
 
-    public boolean validaArea(String area) {
+    public boolean validaArea() {
         if (area == null || area.isEmpty())
             return false;
 

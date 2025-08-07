@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import br.ufjf.ssapi.model.repository.*;
 import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -40,12 +40,13 @@ public class EspecialidadeService {
         especialidadeRepository.delete(especialidade);
     }
 
-    public void validar(Especialidade especialidade) throws PasswordException {
-        if (especialidade.getNome() == null || especialidade.getNome().isEmpty()) {
-            throw new PasswordException("O nome não pode ser vazio.");
+    public void validar(Especialidade especialidade) throws DefaultException {
+        if (!especialidade.validaNome()){
+            throw new DefaultException("O nome da especialidade não pode ser vazio.");
         }
-        if (especialidade.getArea() == null || especialidade.getArea().isEmpty()) {
-            throw new PasswordException("A área não pode ser vazio.");
+        if (!especialidade.validaArea()) {
+            throw new DefaultException("A área da especialidade não pode ser vazia.");
         }
+        
     }
 }

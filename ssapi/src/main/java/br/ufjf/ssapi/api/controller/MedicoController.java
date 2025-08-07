@@ -81,9 +81,9 @@ public class MedicoController {
 
     @DeleteMapping("{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
-        Optional<Medico> medico = service.getAdmin(id);
+        Optional<Medico> medico = service.getMedico(id);
         if (!medico.isPresent()) {
-            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Médico não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(medico.get());

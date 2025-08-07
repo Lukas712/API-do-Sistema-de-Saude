@@ -82,7 +82,7 @@ public class EnfermeiroController {
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Enfermeiro> enfermeiro = service.getEnfermeiro(id);
         if (!enfermeiro.isPresent()) {
-            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Enfermeiro não encontrado", HttpStatus.NOT_FOUND);
         }
         try {
             service.excluir(enfermeiro.get());

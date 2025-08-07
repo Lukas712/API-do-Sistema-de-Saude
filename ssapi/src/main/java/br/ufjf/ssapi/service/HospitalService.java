@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import br.ufjf.ssapi.model.repository.*;
 import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -40,15 +40,15 @@ public class HospitalService {
         hospitalRepository.delete(hospital);
     }
 
-    public void validar(Hospital hospital) throws PasswordException {
-        if (hospital.getNome() == null || hospital.getNome().isEmpty()) {
-            throw new PasswordException("O nome não pode ser vazio.");
+    public void validar(Hospital hospital) throws DefaultException {
+        if(!hospital.validaNome()) {
+            throw new DefaultException("Nome inválido");
         }
-        if (hospital.getLocal() == null || hospital.getNome().isEmpty()) {
-            throw new PasswordException("O local não pode ser vazio.");
+        if(!hospital.validaLocal()) {
+            throw new DefaultException("Local inválido");
         }
-        if (hospital.validaCNPJ(hospital.getCnpj())) {
-            throw new PasswordException("CNPJ está no formato incorreto.");
+        if(!hospital.validaCNPJ()) {
+            throw new DefaultException("CNPJ inválido");
         }
     }
 }

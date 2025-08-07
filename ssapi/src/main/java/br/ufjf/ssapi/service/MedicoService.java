@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Medico;
 import br.ufjf.ssapi.model.repository.MedicoRepository;
 
@@ -40,24 +40,33 @@ public class MedicoService {
         medicoRepository.delete(medico);
     }
 
-    public void validar(Medico medico) throws PasswordException {
-        if (medico.getNome() == null || medico.getNome().isEmpty()) {
-            throw new PasswordException("O nome não pode ser vazio.");
+    public void validar(Medico medico) throws DefaultException {
+        if(!medico.validaNome()) {
+            throw new DefaultException("Nome vazio ou inválido.");
         }
-        if (medico.getCrm() == null || medico.getNome().isEmpty()) {
-            throw new PasswordException("O crm não pode ser vazio.");
+        if(!medico.validaCrm()) {
+            throw new DefaultException("CRM inválido");
         }
-        if (!medico.validaEmail(medico.getEmail())) {
-            throw new PasswordException("O email está no formato incorreto.");
+        if(!medico.validaEspecialidade()) {
+            throw new DefaultException("Especialidade inválida");
         }
-        if (!medico.validaCPF(medico.getCpf())) {
-            throw new PasswordException("O cpf está no formato incorreto.");
+        if(!medico.validaHospital()) {
+            throw new DefaultException("Hospital inválido");
         }
-        if (!medico.validaDataNascimento(medico.getDataNascimento())) {
-            throw new PasswordException("A data está no formato incorreto.");
+        if (!medico.validaEmail()) {
+            throw new DefaultException("O email está no formato incorreto.");
         }
-        if (!medico.validaTelefone(medico.getTelefone())) {
-            throw new PasswordException("O telefone está no formato incorreto.");
+        if (!medico.validaCPF()) {
+            throw new DefaultException("O cpf está no formato incorreto.");
+        }
+        if (!medico.validaDataNascimento()) {
+            throw new DefaultException("A data está no formato incorreto.");
+        }
+        if (!medico.validaTelefone()) {
+            throw new DefaultException("O telefone está no formato incorreto.");
+        }
+        if(!medico.validaGenero()){
+            throw new DefaultException("Gênero inválido!.");
         }
     }
 }

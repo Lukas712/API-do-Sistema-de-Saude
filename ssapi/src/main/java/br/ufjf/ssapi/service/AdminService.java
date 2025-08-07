@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Admin;
 import br.ufjf.ssapi.model.repository.AdminRepository;
 
@@ -41,21 +41,28 @@ public class AdminService {
         adminRepository.delete(admin);
     }
 
-    public void validar(Admin admin) throws PasswordException {
-        if (!admin.validaNome(admin.getNome())) {
-            throw new PasswordException("Nome inválido");
+    public void validar(Admin admin) throws DefaultException {
+        if (!admin.validaNome()) {
+            throw new DefaultException("Nome inválido");
         }
-        if (!admin.validaEmail(admin.getEmail())) {
-            throw new PasswordException("O email está no formato incorreto.");
+        if (!admin.validaEmail()) {
+            throw new DefaultException("O email está no formato incorreto.");
         }
-        if (!admin.validaCPF(admin.getCpf())) {
-            throw new PasswordException("O cpf está no formato incorreto.");
+        if (!admin.validaCPF()) {
+            throw new DefaultException("O cpf está no formato incorreto.");
         }
-        if (!admin.validaDataNascimento(admin.getDataNascimento())) {
-            throw new PasswordException("A data está no formato incorreto.");
+        if (!admin.validaDataNascimento()) {
+            throw new DefaultException("A data está no formato incorreto.");
         }
-        if (!admin.validaTelefone(admin.getTelefone())) {
-            throw new PasswordException("O telefone está no formato incorreto.");
+        if (!admin.validaTelefone()) {
+            throw new DefaultException("O telefone está no formato incorreto.");
+        }
+
+        if (!admin.validaHospital()) {
+            throw new DefaultException("Hospital não encontrado");
+        }
+        if(!admin.validaGenero()){
+            throw new DefaultException("Gênero inválido!.");
         }
     }
 }

@@ -31,4 +31,8 @@ public class Receita {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
+    public boolean validaDescricao() {
+        return descricao != null && !descricao.isEmpty();
+    }
 }

@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.springframework.stereotype.Service;
 import br.ufjf.ssapi.model.repository.*;
 import br.ufjf.ssapi.model.entity.*;
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -39,9 +39,15 @@ public class ConsultaService {
         consultaRepository.delete(consulta);
     }
 
-    public void validar(Consulta consulta) throws PasswordException {
-        if (consulta.getDescricao() == null || consulta.getDescricao().isEmpty()) {
-            throw new PasswordException("A consulta não pode ser vazio.");
+    public void validar(Consulta consulta) throws DefaultException {
+        if (!consulta.validaDescricao()) {
+            throw new DefaultException("A consulta não pode ser vazio.");
+        }
+        if(!consulta.validaPaciente()){
+            throw new DefaultException("Paciente não encontrado");
+        }
+        if(!consulta.validaReceita()){
+            throw new DefaultException("Receita não encontrada");
         }
     }
 }

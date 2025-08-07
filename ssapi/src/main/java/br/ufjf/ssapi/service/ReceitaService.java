@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Receita;
 import br.ufjf.ssapi.model.repository.ReceitaRepository;
 
@@ -41,9 +41,9 @@ public class ReceitaService {
         receitaRepository.delete(receita);
     }
 
-    public void validar(Receita receita) throws PasswordException {
-        if (receita.getDescricao() == null || receita.getDescricao().isEmpty()) {
-            throw new PasswordException("A descricao não pode ser vazia.");
+    public void validar(Receita receita) throws DefaultException {
+        if(!receita.validaDescricao()){
+            throw new DefaultException("Descrição inválida");
         }
     }
 }

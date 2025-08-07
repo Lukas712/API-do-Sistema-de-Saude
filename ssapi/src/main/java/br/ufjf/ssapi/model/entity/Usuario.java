@@ -25,7 +25,7 @@ public class Usuario {
     private String telefone;
     private String genero;
 
-    public boolean validaEmail(String email) {
+    public boolean validaEmail() {
         if (email == null || email.isEmpty())
             return false;
 
@@ -34,7 +34,7 @@ public class Usuario {
 
     }
 
-    public boolean validaCPF(String cpf) {
+    public boolean validaCPF() {
         if (cpf == null || email.isEmpty())
             return false;
 
@@ -61,7 +61,7 @@ public class Usuario {
                 && (digito2 == Character.getNumericValue(cpf.charAt(10))));
     }
 
-    public boolean validaTelefone(String telefone) {
+    public boolean validaTelefone() {
         if (telefone == null || telefone.isEmpty())
             return false;
 
@@ -77,7 +77,7 @@ public class Usuario {
         return true;
     }
 
-    public boolean validaNome(String nome) {
+    public boolean validaNome() {
         if (nome == null || nome.isEmpty())
             return false;
 
@@ -85,7 +85,7 @@ public class Usuario {
         return Pattern.matches(regex, nome);
     }
 
-    public boolean validaGenero(String genero) {
+    public boolean validaGenero() {
         if (genero == null || genero.isEmpty())
             return false;
 
@@ -154,11 +154,11 @@ public class Usuario {
         this.id = id;
     }
 
-    public boolean validaDataNascimento(Date dataNac) {
-        if (dataNac == null)
+    public boolean validaDataNascimento() {
+        if (dataNascimento == null)
             return false;
 
-        LocalDate nascimento = dataNac.toInstant()
+        LocalDate nascimento = dataNascimento.toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate();
         LocalDate hoje = LocalDate.now();

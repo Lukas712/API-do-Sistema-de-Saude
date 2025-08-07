@@ -47,11 +47,19 @@ public class Medicamento {
         this.receita = receita;
     }
 
-    public boolean validaNome(String nome){
+    public boolean validaNome(){
         if (nome == null || nome.isEmpty())
             return false;
 
         String regex = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$";
         return Pattern.matches(regex, nome);
     }
+
+    public boolean validaReceita() {
+        return receita != null;
+    }
+
+
+
+
 }

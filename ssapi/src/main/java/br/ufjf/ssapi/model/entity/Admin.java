@@ -14,13 +14,15 @@ public class Admin extends Usuario{
     @ManyToOne
     private Hospital hospital;
 
-    
-
     public Hospital getHospital() {
         return hospital;
     }
 
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
+    }
+
+    public boolean validaHospital() {
+        return hospital != null;
     }
 }

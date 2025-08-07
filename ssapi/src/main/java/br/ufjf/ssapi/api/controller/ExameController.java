@@ -85,7 +85,7 @@ public class ExameController {
 
     @DeleteMapping("{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
-        Optional<Exame> exame = service.getAdmin(id);
+        Optional<Exame> exame = service.getExame(id);
         if (!exame.isPresent()) {
             return new ResponseEntity("Exame não encontrado", HttpStatus.NOT_FOUND);
         }

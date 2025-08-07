@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.AssistenteAdministrativo;
 import br.ufjf.ssapi.model.repository.AssistenteAdministrativoRepository;
 
@@ -41,21 +41,27 @@ public class AssistenteAdministrativoService {
         assistenteAdministrativoRepository.delete(assistenteAdministrativo);
     }
 
-    public void validar(AssistenteAdministrativo assistenteAdministrativo) throws PasswordException {
-        if (!assistenteAdministrativo.validaNome(assistenteAdministrativo.getNome())) {
-            throw new PasswordException("O nome não pode ser vazio.");
+    public void validar(AssistenteAdministrativo assistenteAdministrativo) throws DefaultException {
+        if (!assistenteAdministrativo.validaNome()) {
+            throw new DefaultException("O nome não pode ser vazio.");
         }
-        if (!assistenteAdministrativo.validaEmail(assistenteAdministrativo.getEmail())) {
-            throw new PasswordException("O email está no formato incorreto.");
+        if (!assistenteAdministrativo.validaEmail()) {
+            throw new DefaultException("O email está no formato incorreto.");
         }
-        if (!assistenteAdministrativo.validaCPF(assistenteAdministrativo.getCpf())) {
-            throw new PasswordException("O cpf está no formato incorreto.");
+        if (!assistenteAdministrativo.validaCPF()) {
+            throw new DefaultException("O cpf está no formato incorreto.");
         }
-        if (!assistenteAdministrativo.validaDataNascimento(assistenteAdministrativo.getDataNascimento())) {
-            throw new PasswordException("A data está no formato incorreto.");
+        if (!assistenteAdministrativo.validaDataNascimento()) {
+            throw new DefaultException("A data está no formato incorreto.");
         }
-        if (!assistenteAdministrativo.validaTelefone(assistenteAdministrativo.getTelefone())) {
-            throw new PasswordException("O telefone está no formato incorreto.");
+        if (!assistenteAdministrativo.validaTelefone()) {
+            throw new DefaultException("O telefone está no formato incorreto.");
+        }
+        if(!assistenteAdministrativo.validaHospital()){
+            throw new DefaultException("Hospital não encontrado");
+        }
+        if(!assistenteAdministrativo.validaGenero()){
+            throw new DefaultException("Gênero inválido!.");
         }
     }
 }

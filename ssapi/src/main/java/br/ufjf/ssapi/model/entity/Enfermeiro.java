@@ -24,4 +24,8 @@ public class Enfermeiro extends Usuario{
     public void setHospital(Hospital hospital) {
         this.hospital = hospital;
     }
+
+    public boolean validaHospital() {
+        return hospital != null;
+    }
 }

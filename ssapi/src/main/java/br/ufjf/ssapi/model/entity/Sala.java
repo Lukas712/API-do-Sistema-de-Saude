@@ -59,11 +59,15 @@ public class Sala {
         this.hospital = hospital;
     }
 
-    public boolean validaEquipamento(String equipamento){
-        if (equipamento == null || equipamento.isEmpty())
-            return false;
+    public boolean validaHospital() {
+        return hospital != null;
+    }
 
-        String regex = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$";
-        return Pattern.matches(regex, equipamento);
+    public boolean validaExame() {
+        return exame != null;
+    }
+
+    public boolean validaEquipamento() {
+        return equipamento != null && !equipamento.isEmpty();
     }
 }

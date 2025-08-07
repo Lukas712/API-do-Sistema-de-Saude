@@ -56,4 +56,16 @@ public class Consulta {
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
+
+    public boolean validaDescricao() {
+        return descricao != null && !descricao.isEmpty();
+    }
+
+    public boolean validaReceita() {
+        return receita != null;
+    }
+
+    public boolean validaPaciente() {
+        return paciente != null;
+    }
 }

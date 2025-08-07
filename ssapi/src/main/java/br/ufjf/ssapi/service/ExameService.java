@@ -7,7 +7,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.ufjf.ssapi.exception.PasswordException;
+import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Exame;
 import br.ufjf.ssapi.model.repository.ExameRepository;
 
@@ -41,15 +41,21 @@ public class ExameService {
         exameRepository.delete(exame);
     }
 
-    public void validar(Exame exame) throws PasswordException {
-        if (!exame.validaValidade(exame.getValidade())) {
-            throw new PasswordException("Validade esta no formato incorreto");
+    public void validar(Exame exame) throws DefaultException {
+        if (!exame.validaValidade()) {
+            throw new DefaultException("Validade esta no formato incorreto");
         }
-        if (exame.getDescricao() == null || exame.getDescricao().isEmpty()) {
-            throw new PasswordException("A descricao não pode ser vazia.");
+        if(!exame.validaDescricao()) {
+            throw new DefaultException("Descrição não pode ser vazia");
         }
-        if (exame.getLaudo() == null || exame.getLaudo().isEmpty()) {
-            throw new PasswordException("O laudo não pode ser vazio.");
+        if(!exame.validaLaudo()) {
+            throw new DefaultException("Paciente não encontrado");
+        }
+        if(!exame.validaPaciente()) {
+            throw new DefaultException("Paciente não encontrado");
+        }
+        if(!exame.validaEnfermeiro()) {
+            throw new DefaultException("Enfermeiro não encontrado");
         }
     }
 }
