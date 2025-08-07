@@ -38,19 +38,17 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
                 .title("SS API")
-                .description("API do Sistema de Saúde")
+                .description("API do Sistema de Saúde\n" +
+                "Contatos:\n" +
+                         "Lukas Freitas de Carvalho - lukas.freitas@estudante.ufjf.br - http://github.com/Lukas712\n" +
+                         "Matheus Ribeiro Menezes - matheusribeiro.menezes@estudante.ufjf.br - http://github.com/MatheusRM1")
                 .version("1.0")
-                .contact(contact().get(0))
-                .contact(contact().get(1))
+                .contact(contact())
                 .build();
     }
 
-    private List<Contact> contact(){
-        List<Contact> contacts = new ArrayList<>();
-        contacts.add(new Contact("Lukas Freitas de Carvalho","http://github.com/Lukas712",
-                "lukas.freitas@estudante.ufjf.br"));
-        contacts.add(new Contact("Matheus Ribeiro Menezes","http://github.com/MatheusRM1", "matheusribeiro.menezes@estudante.ufjf.br"));
-        return contacts;
+    private Contact contact(){
+        return new Contact("Equipe SS API", "http://github.com/Lukas712", "lukas.freitas@estudante.ufjf.br");
     }
 
 
