@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,12 +37,22 @@ public class PacienteController {
     private final PacienteService service;
 
     @GetMapping()
+    @ApiOperation("Obtém todos os pacientes")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Pacientes encontrados"),
+            @ApiResponse(code = 404, message = "Pacientes não encontrados")
+    })
     public ResponseEntity get() {
         List<Paciente> pacientes = service.getPacientes();
         return ResponseEntity.ok(pacientes.stream().map(PacienteDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém um paciente pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Paciente encontrado"),
+            @ApiResponse(code = 404, message = "Paciente não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Paciente> paciente = service.getPaciente(id);
         if (!paciente.isPresent()) {
@@ -50,6 +62,11 @@ public class PacienteController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria um novo paciente")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Paciente criado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar o paciente")
+    })
     public ResponseEntity post(@RequestBody PacienteDTO dto) {
         try {
             Paciente paciente = converter(dto);
@@ -61,6 +78,11 @@ public class PacienteController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza um paciente existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Paciente atualizado com sucesso"),
+        @ApiResponse(code = 400, message = "Erro ao atualizar o paciente")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody PacienteDTO dto) {
         if (!service.getPaciente(id).isPresent()) {
             return new ResponseEntity("Paciente não encontrado", HttpStatus.NOT_FOUND);
@@ -76,6 +98,11 @@ public class PacienteController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um paciente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Paciente excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o paciente")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Paciente> paciente = service.getPaciente(id);
         if (!paciente.isPresent()) {

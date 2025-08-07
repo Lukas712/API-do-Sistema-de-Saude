@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,12 +37,22 @@ public class ReceitaController {
     private final ReceitaService service;
 
     @GetMapping()
+    @ApiOperation("Obtém todas as receitas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Receitas encontradas"),
+            @ApiResponse(code = 404, message = "Receitas não encontradas")
+    })
     public ResponseEntity get() {
         List<Receita> receitas = service.getReceitas();
         return ResponseEntity.ok(receitas.stream().map(ReceitaDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém uma receita pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Receita encontrada"),
+            @ApiResponse(code = 404, message = "Receita não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Receita> receita = service.getReceita(id);
         if (!receita.isPresent()) {
@@ -50,6 +62,11 @@ public class ReceitaController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria uma nova receita")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Receita criada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar a receita")
+    })
     public ResponseEntity post(@RequestBody ReceitaDTO dto) {
         try {
             Receita receita = converter(dto);
@@ -61,6 +78,11 @@ public class ReceitaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza uma receita existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Receita atualizada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar a receita")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ReceitaDTO dto) {
         if (!service.getReceita(id).isPresent()) {
             return new ResponseEntity("Receita não encontrada", HttpStatus.NOT_FOUND);
@@ -76,6 +98,11 @@ public class ReceitaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma receita")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Receita excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a receita")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Receita> receita = service.getReceita(id);
         if (!receita.isPresent()) {

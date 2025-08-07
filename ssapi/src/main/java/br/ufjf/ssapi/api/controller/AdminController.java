@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,12 +36,22 @@ public class AdminController {
     private final HospitalService hospitalService;
 
     @GetMapping()
+    @ApiOperation("Obtém todos os administradores")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Administradores encontrados"),
+            @ApiResponse(code = 404, message = "Administradores não encontrados")
+    })
     public ResponseEntity get() {
         List<Admin> admins = service.getAdmins();
         return ResponseEntity.ok(admins.stream().map(AdminDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém um administrador pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Administrador encontrado"),
+            @ApiResponse(code = 404, message = "Administrador não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Admin> admin = service.getAdmin(id);
         if (!admin.isPresent()) {
@@ -49,6 +61,11 @@ public class AdminController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria um novo administrador")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Novo administrador criado com sucesso!"),
+            @ApiResponse(code = 404, message = "Erro ao criar o administrador")
+    })
     public ResponseEntity post(@RequestBody AdminDTO dto) {
         try {
             Admin admin = converter(dto);
@@ -60,6 +77,11 @@ public class AdminController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza um administrador existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Administrador atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar o administrador")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AdminDTO dto) {
         if (!service.getAdmin(id).isPresent()) {
             return new ResponseEntity("Admin não encontrado", HttpStatus.NOT_FOUND);
@@ -75,6 +97,11 @@ public class AdminController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um administrador")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Administrador excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o administrador")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Admin> admin = service.getAdmin(id);
         if (!admin.isPresent()) {

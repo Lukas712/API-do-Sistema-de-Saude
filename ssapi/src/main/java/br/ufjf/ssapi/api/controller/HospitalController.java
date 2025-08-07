@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,12 +38,22 @@ public class HospitalController {
 
 
     @GetMapping()
+    @ApiOperation("Obtém todos os hospitais")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Hospitais encontrados"),
+            @ApiResponse(code = 404, message = "Hospitais não encontrados")
+    })
     public ResponseEntity get() {
         List<Hospital> hospital = service.getHospitals();
         return ResponseEntity.ok(hospital.stream().map(HospitalDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém um hospital pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Hospital encontrado"),
+            @ApiResponse(code = 404, message = "Hospital não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Hospital> hospital = service.getHospital(id);
         if (!hospital.isPresent()) {
@@ -51,6 +63,11 @@ public class HospitalController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria um novo hospital")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Hospital criado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar o hospital")
+    })
     public ResponseEntity post(@RequestBody HospitalDTO dto) {
         try {
             Hospital hospital = converter(dto);
@@ -62,6 +79,11 @@ public class HospitalController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza um hospital existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Hospital atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar o hospital")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody HospitalDTO dto) {
         if (!service.getHospital(id).isPresent()) {
             return new ResponseEntity("Hospital não encontrado", HttpStatus.NOT_FOUND);
@@ -77,6 +99,11 @@ public class HospitalController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um hospital")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Hospital excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o hospital")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Hospital> hospital = service.getHospital(id);
         if (!hospital.isPresent()) {

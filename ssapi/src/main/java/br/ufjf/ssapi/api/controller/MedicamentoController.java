@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,12 +38,22 @@ public class MedicamentoController {
     private final ReceitaService receitaService;
 
     @GetMapping()
+    @ApiOperation("Obtém todos os medicamentos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Medicamentos encontrados"),
+            @ApiResponse(code = 404, message = "Medicamentos não encontrados")
+    })
     public ResponseEntity get() {
         List<Medicamento> medicamentos = service.getMedicamentos();
         return ResponseEntity.ok(medicamentos.stream().map(MedicamentoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém um medicamento pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Medicamento encontrado"),
+            @ApiResponse(code = 404, message = "Medicamento não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Medicamento> medicamento = service.getMedicamento(id);
         if (!medicamento.isPresent()) {
@@ -51,6 +63,11 @@ public class MedicamentoController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria um novo medicamento")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Medicamento criado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar o medicamento")
+    })
     public ResponseEntity post(@RequestBody MedicamentoDTO dto) {
         try {
             Medicamento medicamento = converter(dto);
@@ -62,6 +79,11 @@ public class MedicamentoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza um medicamento existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Medicamento atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar o medicamento")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody MedicamentoDTO dto) {
         if (!service.getMedicamento(id).isPresent()) {
             return new ResponseEntity("Medicamento não encontrado", HttpStatus.NOT_FOUND);
@@ -77,6 +99,11 @@ public class MedicamentoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um medicamento")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Medicamento excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o medicamento")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Medicamento> medicamento = service.getMedicamento(id);
         if (!medicamento.isPresent()) {

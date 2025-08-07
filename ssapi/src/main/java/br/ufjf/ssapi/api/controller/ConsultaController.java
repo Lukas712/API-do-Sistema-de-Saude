@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,12 +44,22 @@ public class ConsultaController {
 
 
     @GetMapping()
+    @ApiOperation("Obtém todos as consultas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Consultas encontradas"),
+            @ApiResponse(code = 404, message = "Consultas não encontradas")
+    })
     public ResponseEntity get() {
         List<Consulta> Consultas = service.getConsultas();
         return ResponseEntity.ok(Consultas.stream().map(ConsultaDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém uma consulta pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Consulta encontrada"),
+            @ApiResponse(code = 404, message = "Consulta não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Consulta> consulta = service.getConsulta(id);
         if (!consulta.isPresent()) {
@@ -57,6 +69,11 @@ public class ConsultaController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria uma nova consulta")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Consulta criada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar a consulta")
+    })
     public ResponseEntity post(@RequestBody ConsultaDTO dto) {
         try {
             Consulta consulta = converter(dto);
@@ -68,6 +85,11 @@ public class ConsultaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza uma consulta existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Consulta atualizada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar a consulta")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ConsultaDTO dto) {
         if (!service.getConsulta(id).isPresent()) {
             return new ResponseEntity("Consulta não encontrado", HttpStatus.NOT_FOUND);
@@ -83,6 +105,11 @@ public class ConsultaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma consulta")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Consulta excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a consulta")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Consulta> consulta = service.getConsulta(id);
         if (!consulta.isPresent()) {

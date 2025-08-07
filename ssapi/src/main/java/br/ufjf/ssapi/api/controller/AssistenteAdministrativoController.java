@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,12 +39,22 @@ public class AssistenteAdministrativoController {
 
 
     @GetMapping()
+    @ApiOperation("Obtém todos os assistentes administrativos")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Assistentes encontrados"),
+            @ApiResponse(code = 404, message = "Assistentes não encontrados")
+    })
     public ResponseEntity get() {
         List<AssistenteAdministrativo> assistenteAdministrativos = service.getAssistenteAdministrativos();
         return ResponseEntity.ok(assistenteAdministrativos.stream().map(AssistenteAdministrativoDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém um assistente administrativo pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Assistente encontrado"),
+            @ApiResponse(code = 404, message = "Assistente não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AssistenteAdministrativo> assistenteAdministrativo = service.getAssistenteAdministrativo(id);
         if (!assistenteAdministrativo.isPresent()) {
@@ -52,6 +64,11 @@ public class AssistenteAdministrativoController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria um novo assistente administrativo")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Assistente criado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar o assistente")
+    })
     public ResponseEntity post(@RequestBody AssistenteAdministrativoDTO dto) {
         try {
             AssistenteAdministrativo assistenteAdministrativo = converter(dto);
@@ -63,6 +80,11 @@ public class AssistenteAdministrativoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza um assistente administrativo existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Assistente atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar o assistente")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody AssistenteAdministrativoDTO dto) {
         if (!service.getAssistenteAdministrativo(id).isPresent()) {
             return new ResponseEntity("Assistente Administrativo não encontrado", HttpStatus.NOT_FOUND);
@@ -78,6 +100,11 @@ public class AssistenteAdministrativoController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um assistente administrativo")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Assistente excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o assistente")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AssistenteAdministrativo> assistenteAdministrativo = service.getAssistenteAdministrativo(id);
         if (!assistenteAdministrativo.isPresent()) {

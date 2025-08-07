@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,12 +39,22 @@ public class EspecialidadeController {
 
 
     @GetMapping()
+    @ApiOperation("Obtém todas as especialidades")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Especialidades encontradas"),
+            @ApiResponse(code = 404, message = "Especialidades não encontradas")
+    })
     public ResponseEntity get() {
         List<Especialidade> especialidades = service.getEspecialidades();
         return ResponseEntity.ok(especialidades.stream().map(EspecialidadeDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém uma especialidade pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Especialidade encontrada"),
+            @ApiResponse(code = 404, message = "Especialidade não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Especialidade> especialidade = service.getEspecialidade(id);
         if (!especialidade.isPresent()) {
@@ -52,6 +64,11 @@ public class EspecialidadeController {
     }
 
      @PostMapping()
+    @ApiOperation("Cria uma nova especialidade")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Especialidade criada com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar a especialidade")
+    })
     public ResponseEntity post(@RequestBody EspecialidadeDTO dto) {
         try {
             Especialidade especialidade = converter(dto);
@@ -63,6 +80,11 @@ public class EspecialidadeController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza uma especialidade existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Especialidade atualizada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar a especialidade")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody EspecialidadeDTO dto) {
         if (!service.getEspecialidade(id).isPresent()) {
             return new ResponseEntity("Especialidade não encontrada", HttpStatus.NOT_FOUND);
@@ -78,6 +100,11 @@ public class EspecialidadeController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma especialidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Especialidade excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a especialidade")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Especialidade> especialidade = service.getEspecialidade(id);
         if (!especialidade.isPresent()) {

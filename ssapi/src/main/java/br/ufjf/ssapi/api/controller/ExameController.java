@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,12 +45,22 @@ public class ExameController {
 
 
     @GetMapping()
+    @ApiOperation("Obtém todos os exames")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exames encontrados"),
+            @ApiResponse(code = 404, message = "Exames não encontrados")
+    })
     public ResponseEntity get() {
         List<Exame> exame = service.getExames();
         return ResponseEntity.ok(exame.stream().map(ExameDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém um exame pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exame encontrado"),
+            @ApiResponse(code = 404, message = "Exame não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Exame> exame = service.getExame(id);
         if (!exame.isPresent()) {
@@ -58,6 +70,11 @@ public class ExameController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria um novo exame")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Exame criado com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar o exame")
+    })
     public ResponseEntity post(@RequestBody ExameDTO dto) {
         try {
             Exame exame = converter(dto);
@@ -69,6 +86,11 @@ public class ExameController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza um exame existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Exame atualizado com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar o exame")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody ExameDTO dto) {
         if (!service.getExame(id).isPresent()) {
             return new ResponseEntity("Exame não encontrado", HttpStatus.NOT_FOUND);
@@ -84,6 +106,11 @@ public class ExameController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui um exame")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Exame excluído com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir o exame")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Exame> exame = service.getExame(id);
         if (!exame.isPresent()) {

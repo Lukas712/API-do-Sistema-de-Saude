@@ -1,5 +1,7 @@
 package br.ufjf.ssapi.api.controller;
 
+import io.swagger.annotations.*;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,12 +46,22 @@ public class SalaController {
     private final HospitalService hospitalService;
 
     @GetMapping()
+    @ApiOperation("Obtém todas as salas")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Salas encontradas"),
+            @ApiResponse(code = 404, message = "Salas não encontradas")
+    })
     public ResponseEntity get() {
         List<Sala> salas = service.getSalas();
         return ResponseEntity.ok(salas.stream().map(SalaDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Obtém uma sala pelo ID")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sala encontrada"),
+            @ApiResponse(code = 404, message = "Sala não encontrada")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Sala> sala = service.getSala(id);
         if (!sala.isPresent()) {
@@ -59,6 +71,11 @@ public class SalaController {
     }
 
     @PostMapping()
+    @ApiOperation("Cria uma nova sala")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Salas criadas com sucesso"),
+            @ApiResponse(code = 404, message = "Erro ao criar a sala")
+    })
     public ResponseEntity post(@RequestBody SalaDTO dto) {
         try {
             Sala sala = converter(dto);
@@ -70,6 +87,11 @@ public class SalaController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Atualiza uma sala existente")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Sala atualizada com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao atualizar a sala")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody SalaDTO dto) {
         if (!service.getSala(id).isPresent()) {
             return new ResponseEntity("Sala não encontrada", HttpStatus.NOT_FOUND);
@@ -85,6 +107,11 @@ public class SalaController {
     }
 
     @DeleteMapping("{id}")
+    @ApiOperation("Exclui uma sala")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Sala excluída com sucesso"),
+            @ApiResponse(code = 400, message = "Erro ao excluir a sala")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Sala> sala = service.getSala(id);
         if (!sala.isPresent()) {
