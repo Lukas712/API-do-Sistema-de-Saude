@@ -21,7 +21,12 @@ public class MedicamentoDTO {
     public static MedicamentoDTO create(Medicamento medicamento){
         ModelMapper modelMapper = new ModelMapper();
         MedicamentoDTO dto = modelMapper.map(medicamento, MedicamentoDTO.class);
-        dto.nomeReceita = medicamento.getReceita().getDescricao();
+        
+        if (medicamento.getReceita() != null) {
+            dto.idReceita = medicamento.getReceita().getId();
+            dto.nomeReceita = medicamento.getReceita().getDescricao();
+        }
+        
         return dto;
     }
 }
