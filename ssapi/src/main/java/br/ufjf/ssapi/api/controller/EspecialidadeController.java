@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.ufjf.ssapi.api.dto.AdminDTO;
 import br.ufjf.ssapi.api.dto.EnfermeiroDTO;
 import br.ufjf.ssapi.api.dto.EspecialidadeDTO;
+import br.ufjf.ssapi.api.dto.MedicoDTO;
 import br.ufjf.ssapi.exception.DefaultException;
 import br.ufjf.ssapi.model.entity.Admin;
 import br.ufjf.ssapi.model.entity.Especialidade;
 import br.ufjf.ssapi.model.entity.Hospital;
+import br.ufjf.ssapi.model.entity.Medico;
 import br.ufjf.ssapi.service.EspecialidadeService;
 import br.ufjf.ssapi.service.HospitalService;
 import lombok.RequiredArgsConstructor;
@@ -123,5 +125,15 @@ public class EspecialidadeController {
         Especialidade especialidade = modelMapper.map(dto, Especialidade.class);
         
         return especialidade;
+    }
+
+    @GetMapping("/{id}/medicos")
+    public ResponseEntity getMedicos(@PathVariable("id") Long id) {
+        Optional<Especialidade> especialidade = service.getEspecialidade(id);
+        if (!especialidade.isPresent()) {
+            return new ResponseEntity("Especialidade não encontrado", HttpStatus.NOT_FOUND);
+        }
+        List<Medico> medicos = especialidade.get().getMedicos();
+        return ResponseEntity.ok(medicos.stream().map(MedicoDTO::create).collect(Collectors.toList()));
     }
 }

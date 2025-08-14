@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.JoinColumn;
 
 
 
@@ -17,7 +17,8 @@ public class Medico extends Usuario{
     @ManyToOne
     private Hospital hospital;
 
-    @OneToOne
+    @ManyToOne
+    @JoinColumn(name = "especialidade_id")
     private Especialidade especialidade;
 
     
